@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Merchandream | Monetiza la Pasión de tu Afición</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-primary': '#227bf6',
+                        'brand-light': '#5BA3FF',
+                        'brand-dark': '#1A5FCC',
+                        'brand-secondary': '#0D47A1'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;900&display=swap');
+        
+        /* CORRECCIÓN DE LAYOUT Y SCROLL */
+        html, body { 
+            font-family: 'Inter', sans-serif; 
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden; /* Estricto para evitar scroll horizontal */
+            background: linear-gradient(135deg, #FAFBFC 0%, #F0F4F8 50%, #E3EEFA 100%);
+            position: relative;
+        }
+
+        /* Animated Background Orbs */
+        @keyframes float-orb-1 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.08; }
+            33% { transform: translate(50px, -80px) scale(1.1); opacity: 0.12; }
+            66% { transform: translate(-40px, 60px) scale(0.9); opacity: 0.1; }
+        }
+        @keyframes float-orb-2 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.06; }
+            50% { transform: translate(-70px, -100px) scale(1.15); opacity: 0.1; }
+        }
+        @keyframes float-orb-3 {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.07; }
+            40% { transform: translate(60px, 90px) scale(1.05); opacity: 0.11; }
+            80% { transform: translate(-50px, -70px) scale(0.95); opacity: 0.09; }
+        }
+        @keyframes breathing-gradient {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.5; }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #227bf6, #5BA3FF);
+            top: 5%;
+            left: -10%;
+            animation: float-orb-1 25s ease-in-out infinite;
+        }
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #1A5FCC, #0D47A1);
+            bottom: 10%;
+            right: -5%;
+            animation: float-orb-2 30s ease-in-out infinite;
+        }
+        .orb-3 {
+            width: 450px;
+            height: 450px;
+            background: linear-gradient(135deg, #5BA3FF, #227bf6);
+            top: 40%;
+            left: 60%;
+            animation: float-orb-3 35s ease-in-out infinite;
+        }
+        
+        .breathing-bg {
+            background: linear-gradient(135deg, rgba(34, 123, 246, 0.05), rgba(91, 163, 255, 0.08));
+            animation: breathing-gradient 10s ease-in-out infinite;
+        }
+
+        /* Glass Effect - Light Theme */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(34, 123, 246, 0.15);
+            box-shadow: 0 8px 32px rgba(34, 123, 246, 0.1);
+        }
+
+        /* Navbar Glass */
+        .navbar-glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(34, 123, 246, 0.1);
+            box-shadow: 0 4px 20px rgba(34, 123, 246, 0.08);
+        }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+        }
+        .hover-lift:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(34, 123, 246, 0.25);
+        }
+
+        /* Mobile Menu Animation - FULL SCREEN */
+        .mobile-menu {
+            transform: translateY(-100%); /* Deslizar desde arriba */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 59; 
+            opacity: 0;
+            pointer-events: none;
+        }
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 55; 
+        }
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+
+        /* Hamburger Menu Icon Animation */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 61; /* Asegurar que el botón siempre es clicable */
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: #227bf6;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2.5rem !important; line-height: 1.1 !important; }
+            .hero-subtitle { font-size: 1.1rem !important; }
+        }
+
+        /* CTA Button Glow */
+        .cta-glow {
+            box-shadow: 0 0 30px rgba(34, 123, 246, 0.3);
+            transition: all 0.3s;
+        }
+        .cta-glow:hover {
+            box-shadow: 0 0 50px rgba(34, 123, 246, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Card shadows */
+        .card-shadow {
+            box-shadow: 0 10px 40px rgba(34, 123, 246, 0.1);
+        }
+
+        /* Carousel Modal Styles */
+
+        .modal-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: rgba(0, 0, 0, 0.85);
+			backdrop-filter: blur(5px);
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.3s ease;
+			z-index: 99999; /* Asegura que quede por encima de todo */
+		}
+		
+		.modal-overlay.open {
+			opacity: 1;
+			pointer-events: auto;
+		}
+		
+        .carousel-container {
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.open .carousel-container {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- No Overlay Needed for Fullscreen Menu Style, but keeping structure clean -->
+    <!-- <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div> -->
+
+    <nav class="navbar-glass fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-xl sm:text-2xl font-black z-50 relative">
+                    <span class="bg-gradient-to-r from-brand-primary to-brand-light bg-clip-text text-transparent">
+                        MERCHANDREAM
+                    </span>
+                </div>
+
+                <div class="hidden md:flex space-x-8">
+                    <a href="#lucky-dolls" class="text-slate-600 hover:text-brand-primary transition-colors font-medium">Lucky Dolls</a>
+                    <a href="#weekend-experience" class="text-slate-600 hover:text-brand-primary transition-colors font-medium">Weekend Experience</a>
+                    <a href="#contacto" class="text-slate-600 hover:text-brand-primary transition-colors font-medium">Contacto</a>
+                </div>
+
+                <button id="mobile-menu-toggle" class="md:hidden focus:outline-none relative hamburger" aria-label="Abrir menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Full Screen Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed inset-0 w-full h-screen bg-white md:hidden flex flex-col items-center justify-center">
+            <div class="absolute inset-0 breathing-bg -z-10"></div>
+            <div class="flex flex-col space-y-8 text-center">
+                <a href="#lucky-dolls" class="mobile-menu-link text-3xl font-black text-slate-800 hover:text-brand-primary transition-colors">Lucky Dolls</a>
+                <a href="#weekend-experience" class="mobile-menu-link text-3xl font-black text-slate-800 hover:text-brand-primary transition-colors">Weekend Experience</a>
+                <a href="#contacto" class="mobile-menu-link text-3xl font-black text-slate-800 hover:text-brand-primary transition-colors">Contacto</a>
+            </div>
+            <div class="absolute bottom-10 text-slate-400 text-sm">
+                &copy; 2026 Merchandream
+            </div>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex items-center justify-center relative pt-20 px-4 sm:px-6">
+        <div class="breathing-bg absolute inset-0"></div>
+        <div class="container mx-auto text-center relative z-10 max-w-5xl">
+            <h1 class="hero-title text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight text-slate-900">
+                Monetiza la Pasión<br/>
+                <span class="bg-gradient-to-r from-brand-primary via-brand-light to-brand-dark bg-clip-text text-transparent">
+                    de tu Afición
+                </span>
+            </h1>
+            <p class="hero-subtitle text-xl sm:text-2xl md:text-3xl text-slate-600 mb-4 font-light">
+                Presentación oficial: Lucky Dolls & The Weekend Experience
+            </p>
+            <p class="text-base sm:text-lg text-slate-500 mb-12 max-w-3xl mx-auto">
+                Dos soluciones rentables para clubes que quieren generar ingresos recurrentes 
+                sin aumentar su carga operativa.
+            </p>
+            <a href="#lucky-dolls" class="cta-glow inline-block bg-gradient-to-r from-brand-primary to-brand-light text-white font-bold py-4 px-10 rounded-full text-lg">
+                Descubrir Soluciones
+            </a>
+        </div>
+    </section>
+
+    <section id="lucky-dolls" class="py-24 px-6">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl md:text-6xl font-black">Lucky Dolls</h2>
+                    <p class="text-slate-500 text-xl">Merchandising de poliresina premium</p>
+                </div>
+                <div class="hidden md:block text-brand-primary font-bold">Desliza para ver más →</div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 8cm -->
+                <div onclick="openProductModal('8cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
+                    <div class="bg-slate-100 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
+                        <img src="assets/luckyDolls/8cm/Pic01.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="8cm">
+                    </div>
+                    <h3 class="font-black text-xl">Lucky Doll 8cm</h3>
+                    <p class="text-brand-primary font-bold">Desde 5,25€ + IVA</p>
+					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
+					Ver fotos →
+					</p>
+                </div>
+
+                <!-- 15cm -->
+                <div onclick="openProductModal('15cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
+                    <div class="bg-slate-100 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
+                        <img src="assets/luckyDolls/14cm/Pic03.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="15cm">
+                    </div>
+                    <h3 class="font-black text-xl">Lucky Doll 15cm</h3>
+                    <p class="text-brand-primary font-bold">Desde 9,86€ + IVA</p>
+					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
+					Ver fotos →
+					</p>
+                </div>
+
+                <!-- 18cm -->
+                <div onclick="openProductModal('18cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group border-2 border-brand-primary">
+                    <div class="bg-blue-50 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden relative">
+                        <img src="assets/luckyDolls/18cm/Pic02.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="18cm">
+                        <span class="absolute top-4 right-4 bg-brand-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">Top Ventas</span>
+                    </div>
+                    <h3 class="font-black text-xl">Lucky Doll 18cm</h3>
+                    <p class="text-brand-primary font-bold">Desde 11,20€ + IVA</p>
+					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
+					Ver fotos →
+					</p>
+                </div>
+
+                <!-- 18cm SONIDO -->
+                <div onclick="openProductModal('18cmSonido')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
+                    <div class="bg-yellow-50 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden relative">
+                        <img src="assets/luckyDolls/18cm/Pic02.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="Sonido">
+                        <span class="absolute bottom-4 right-4 text-2xl">🔊</span>
+                    </div>
+                    <h3 class="font-black text-xl">18cm con Sonido</h3>
+                    <p class="text-brand-primary font-bold">Desde 14,35€ + IVA</p>
+					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
+					Ver fotos →
+					</p>
+                </div>
+
+                <!-- 40cm -->
+                <div onclick="openProductModal('40cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
+                    <div class="bg-slate-100 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
+                        <img src="assets/luckyDolls/40cm/Pic01.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="40cm">
+                    </div>
+                    <h3 class="font-black text-xl">40cm Coleccionista</h3>
+                    <p class="text-brand-primary font-bold">Desde 75,00€ + IVA</p>
+					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
+					Ver fotos →
+					</p>
+                </div>
+
+                <!-- TAMAÑO REAL -->
+                <div onclick="openProductModal('tamanoReal')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group bg-slate-900 text-white border-none">
+                    <div class="bg-white/10 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden relative">
+                        <img src="assets/luckyDolls/40cm/Pic01.png" class="h-4/5 object-contain opacity-50" alt="Real">
+                        <span class="absolute font-black text-center px-4 uppercase tracking-tighter text-xl">Escala 1:1 <br>Real</span>
+                    </div>
+                    <h3 class="font-black text-xl">Tamaño Real</h3>
+                    <p class="text-brand-light font-bold">Consultar</p>
+					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
+					Ver fotos →
+					</p>
+                </div>
+
+                <!-- VINTAGE -->
+                <div onclick="openProductModal('vintage')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
+                    <div class="bg-orange-50 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
+                        <img src="assets/luckyDolls/Vintages/Pic01.png" class="h-4/5 object-contain sepia-[.3]" alt="Vintage">
+                    </div>
+                    <h3 class="font-black text-xl">Línea Vintage</h3>
+                    <p class="text-brand-primary font-bold">Desde 12,50€ + IVA</p>
+					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
+					Ver fotos →
+					</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="weekend-experience" class="py-24 relative bg-gradient-to-b from-transparent to-blue-50">
+        <div class="container mx-auto px-4 sm:px-6">
+            <!-- TITULO Y OBJETIVOS PRINCIPALES -->
+            <div class="text-center mb-16">
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6">
+                    <span class="bg-gradient-to-r from-brand-primary to-brand-dark bg-clip-text text-transparent">
+                        The Weekend Experience
+                    </span>
+                </h2>
+                <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-12 mb-8">
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="bg-brand-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">1</span>
+                        <h3 class="text-xl sm:text-2xl text-slate-700 font-bold">Fidelización</h3>
+                    </div>
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="bg-brand-secondary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">2</span>
+                        <h3 class="text-xl sm:text-2xl text-slate-700 font-bold">Financiación</h3>
+                    </div>
+                </div>
+                <p class="text-base sm:text-lg text-slate-600 max-w-3xl mx-auto">
+                    Fortalece la unión con aficionados y peñistas mientras generas recursos económicos alternativos.
+                </p>
+            </div>
+
+            <!-- DESCRIPCION DEL SORTEO -->
+            <div class="glass rounded-3xl p-8 sm:p-12 max-w-6xl mx-auto mb-12 card-shadow">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="uppercase tracking-wide text-brand-primary font-bold text-sm mb-2">La Experiencia</div>
+                        <h3 class="text-3xl font-black mb-6 text-slate-900 leading-tight">
+                            Acompaña al equipo en un desplazamiento oficial
+                        </h3>
+                        <p class="text-lg text-slate-700 mb-6">
+                            Dos ganadores vivirán la experiencia de acompañar al equipo en un desplazamiento oficial, con 
+                            <strong>todos los gastos de viaje, alojamiento y manutención cubiertos</strong>.
+                        </p>
+                        
+                        <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                            <h4 class="font-bold text-slate-800 mb-3">Detalles del Sorteo:</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <span class="text-brand-primary mr-2 text-xl">•</span>
+                                    <span class="text-slate-700"><strong>Formato:</strong> Una papeleta da derecho a participar en 1 sorteo.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-brand-primary mr-2 text-xl">•</span>
+                                    <span class="text-slate-700"><strong>Calendario:</strong> Primer sorteo previsto para la segunda vuelta de la competición.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-brand-primary mr-2 text-xl">•</span>
+                                    <span class="text-slate-700"><strong>Destino:</strong> El desplazamiento será seleccionado por el Club.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- AUDIENCIA Y ALCANCE (CASO PRACTICO) -->
+                    <div class="glass bg-white/60 p-6 rounded-2xl border border-brand-primary/20 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg z-10">CASO: MÁLAGA CF</div>
+                        <h4 class="text-xl font-bold mb-4 text-slate-800 border-b pb-2">Audiencia y Alcance Potencial</h4>
+                        
+                        <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+                            <div>
+                                <p class="text-slate-500 text-xs uppercase font-bold">Base Social</p>
+                                <p class="text-slate-900 font-bold">~27.000 Socios</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs uppercase font-bold">Estadio</p>
+                                <p class="text-slate-900 font-bold">~24.000 Media</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs uppercase font-bold">Población Local</p>
+                                <p class="text-slate-900 font-bold">600k (Ciudad)</p>
+                                <p class="text-slate-500 text-xs">1.8M (Provincia)</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-4">
+                            <p class="text-brand-primary font-bold text-xs uppercase mb-2">Impacto Digital</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Instagram</span>
+                                    <span class="font-bold text-slate-800">+1.1 Millones</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Facebook</span>
+                                    <span class="font-bold text-slate-800">1 Millón</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-600">Twitter (X)</span>
+                                    <span class="font-bold text-slate-800">+100.000</span>
+                                </div>
+                                <div class="text-xs text-slate-500 pt-1 mt-1 border-t border-slate-200">
+                                    *Impulso en TikTok ("Malagamanía") con influencers como RoRo y BadCharly.
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-500 italic">
+                            La experiencia atrae tanto a socios como a aficionados al fútbol en general.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROPUESTA DE SORTEO Y RECAUDACION -->
+            <div class="grid lg:grid-cols-2 gap-6 max-w-6xl mx-auto mb-12">
+                <!-- ESTRUCTURA DE PRECIOS -->
+                <div class="glass rounded-2xl p-8 card-shadow bg-gradient-to-br from-white to-blue-50">
+                     <h4 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+                        <span>🎟️</span> Estructura de Participación
+                    </h4>
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-center border-b border-slate-200 pb-4">
+                            <div>
+                                <p class="font-bold text-slate-900 text-lg">PVP General</p>
+                                <p class="text-xs text-slate-500">1 Papeleta = 1 Sorteo</p>
+                            </div>
+                            <div class="text-3xl font-black text-brand-primary">20 €</div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center bg-brand-primary/5 p-4 rounded-lg border border-brand-primary/10">
+                            <div>
+                                <p class="font-bold text-slate-900 text-lg">Promoción Socios</p>
+                                <p class="text-xs text-brand-primary font-semibold">¡Bonificación del 12.5%!</p>
+                            </div>
+                            <div class="text-3xl font-black text-brand-dark">2 x 35 €</div>
+                        </div>
+
+                         <div class="mt-6">
+                            <p class="text-sm font-bold text-slate-800 mb-3">Canales de Distribución:</p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white p-3 rounded-lg shadow-sm text-center border border-slate-100">
+                                    <span class="text-xl">🏟️</span>
+                                    <p class="text-xs font-bold text-slate-700 mt-1">Tienda Oficial</p>
+                                    <p class="text-[10px] text-slate-500">Días de partido</p>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg shadow-sm text-center border border-slate-100">
+                                    <span class="text-xl">💻</span>
+                                    <p class="text-xs font-bold text-slate-700 mt-1">Web Merchandream</p>
+                                    <p class="text-[10px] text-slate-500">Exclusiva evento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ESTIMACIONES ECONOMICAS -->
+                <div class="glass rounded-2xl p-8 card-shadow relative overflow-hidden flex flex-col justify-center">
+                    <h4 class="text-xl font-bold mb-6 text-slate-800">Previsión de Recaudación</h4>
+                    
+                    <div class="space-y-8">
+                        <!-- Estimacion 1 (FIXED OVERLAP) -->
+                        <div class="relative pl-6 border-l-4 border-brand-light pt-6">
+                            <span class="absolute -left-6 top-0 bg-brand-light text-white text-[10px] font-bold px-2 py-1 rounded-r shadow-sm">ESTIMACIÓN 1</span>
+                            <div class="flex justify-between items-end mb-1">
+                                <p class="text-slate-600 text-sm">Venta de <strong class="text-slate-800">50.000 papeletas</strong></p>
+                            </div>
+                            <p class="text-4xl sm:text-5xl font-black text-slate-800 tracking-tight">875.000 €</p>
+                        </div>
+                        
+                        <!-- Estimacion 2 (FIXED OVERLAP) -->
+                        <div class="relative pl-6 border-l-4 border-brand-dark pt-6">
+                            <span class="absolute -left-6 top-0 bg-brand-dark text-white text-[10px] font-bold px-2 py-1 rounded-r shadow-sm">ESTIMACIÓN 2 (Escenario Ampliado)</span>
+                            <div class="flex justify-between items-end mb-1">
+                                <p class="text-slate-600 text-sm">Venta de <strong class="text-slate-800">100.000 papeletas</strong></p>
+                            </div>
+                            <p class="text-4xl sm:text-5xl font-black text-slate-800 tracking-tight">1.750.000 €</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GESTION Y REPARTO -->
+            <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
+                <!-- Modelo de Reparto -->
+                <div class="glass p-6 rounded-2xl text-center flex flex-col justify-center">
+                    <h5 class="font-bold text-slate-700 mb-4">Modelo de Reparto</h5>
+                    <div class="flex items-center justify-center space-x-2">
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-brand-primary">50%</div>
+                            <p class="text-xs font-bold text-slate-600">CLUB</p>
+                        </div>
+                        <div class="text-xl text-slate-300">+</div>
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-brand-light">50%</div>
+                            <p class="text-xs font-bold text-slate-600">MERCHANDREAM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestion Integral -->
+                <div class="glass p-6 rounded-2xl md:col-span-2">
+                    <h5 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <span>⚙️</span> Gestión Integral por Merchandream
+                    </h5>
+                    <p class="text-sm text-slate-600 mb-4">Asumimos la responsabilidad total para liberar al club de carga operativa.</p>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-white/50 p-3 rounded-lg border border-slate-100">
+                            <p class="text-xs font-bold text-brand-secondary mb-1">ADMINISTRACIÓN Y FISCALIDAD</p>
+                            <p class="text-xs text-slate-600">Gestión completa, incluido el pago de impuestos correspondientes a Hacienda.</p>
+                        </div>
+                        <div class="bg-white/50 p-3 rounded-lg border border-slate-100">
+                            <p class="text-xs font-bold text-brand-secondary mb-1">DESARROLLO Y EJECUCIÓN</p>
+                            <p class="text-xs text-slate-600">Liderazgo de la implementación operativa de todo el sorteo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PLAN DE COMUNICACION Y FASES -->
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 mb-12">
+                <div class="glass rounded-xl p-8 hover-lift">
+                    <div class="text-4xl mb-4">📢</div>
+                    <h4 class="font-bold text-xl mb-3 text-slate-800">Plan de Comunicación</h4>
+                    <p class="text-slate-600 mb-4 text-sm">Promoción conjunta fundamental para el éxito.</p>
+                    <ul class="text-sm space-y-3 text-slate-600">
+                        <li class="flex items-start">
+                            <span class="text-brand-primary mr-2 font-bold">➢</span> 
+                            <span><strong>Compromiso del Club:</strong> Difusión mediante comunicados oficiales, web, email y redes sociales.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-brand-primary mr-2 font-bold">➢</span> 
+                            <span><strong>Video Promocional:</strong> Producción de alta calidad con jugadores influyentes para generar entusiasmo.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass rounded-xl p-8 hover-lift">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h4 class="font-bold text-xl mb-3 text-slate-800">Fases del Proyecto</h4>
+                    <div class="relative border-l-2 border-brand-primary/30 ml-3 pl-6 space-y-6">
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-brand-primary border-2 border-white shadow"></span>
+                            <h5 class="font-bold text-slate-800">Fase 1: Formalización</h5>
+                            <p class="text-xs text-slate-600 mt-1">Firma del contrato (Marco de colaboración Málaga CF - Merchandream).</p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-brand-light border-2 border-white shadow"></span>
+                            <h5 class="font-bold text-slate-800">Fase 2: Desarrollo y Presentación</h5>
+                            <p class="text-xs text-slate-600 mt-1">Elaboración de documentación y presentación conjunta a la afición.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OBSERVACION CLAVE -->
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-brand-secondary to-brand-dark rounded-xl p-1 shadow-lg">
+                    <div class="bg-white rounded-lg p-6 text-center">
+                        <p class="font-bold text-brand-secondary uppercase text-xs mb-2 tracking-widest">Observación Clave</p>
+                        <p class="text-slate-800 font-medium text-lg leading-relaxed">
+                            "Este proyecto no es solo una iniciativa de engagement para la afición, sino una <span class="text-brand-primary font-bold">herramienta financiera concreta</span> diseñada para generar recursos económicos alternativos y directos para la entidad."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-16">
+                <a href="#contacto" class="inline-block bg-slate-900 text-white font-bold py-4 px-12 rounded-full text-lg hover:bg-slate-800 transition-colors shadow-xl">
+                    Solicitar Propuesta Formal
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="py-24 relative">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-slate-900">
+                    Hablemos de tu Club
+                </h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">
+                    Agenda una presentación personalizada sin compromiso
+                </p>
+            </div>
+
+            <div class="glass rounded-3xl p-8 sm:p-12 max-w-3xl mx-auto card-shadow">
+                <div class="flex flex-col gap-6 mb-8">
+                    <div class="text-center">
+                        <p class="text-sm text-slate-500 mb-2">Email</p>
+                        <p class="text-lg sm:text-xl font-semibold text-slate-800 break-all">direccion.general@merchandream.es</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm text-slate-500 mb-2">Teléfono</p>
+                        <p class="text-lg sm:text-xl font-semibold text-slate-800">+34 605 19 57 44</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="mailto:direccion.general@merchandream.es?subject=Solicitud%20de%20Información%20Merchandream&body=Hola,%0A%0AMe%20gustaría%20recibir%20más%20información%20sobre%20sus%20servicios%20de%20Lucky%20Dolls%20y%20Weekend%20Experience.%0A%0AGracias." 
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="bg-gradient-to-r from-brand-primary to-brand-light text-white font-bold py-4 px-8 rounded-full text-lg hover:scale-105 transition-transform text-center shadow-lg">
+                        📧 Enviar Email
+                    </a>
+                    <a href="https://wa.me/34605195744?text=Hola,%20estoy%20interesado%20en%20conocer%20más%20sobre%20Merchandream" 
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="bg-white border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white font-bold py-4 px-8 rounded-full text-lg transition-all text-center shadow-lg">
+                        💬 WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 border-t border-slate-200 relative bg-white">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <div class="text-3xl font-black mb-4">
+                <span class="bg-gradient-to-r from-brand-primary to-brand-light bg-clip-text text-transparent">
+                    MERCHANDREAM
+                </span>
+            </div>
+            <p class="text-slate-500 text-sm mb-4">
+                Soluciones de monetización para clubes deportivos
+            </p>
+            <p class="text-slate-400 text-xs">
+                &copy; 2026 Merchandream. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- PRODUCT CAROUSEL MODAL -->
+    <div id="modal-product" class="modal-overlay" onclick="closeProductModal()">
+        <div class="bg-white rounded-[40px] w-full max-w-5xl flex flex-col md:flex-row overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+            <!-- Carrusel -->
+            <div class="md:w-3/5 bg-slate-50 p-10 flex flex-col items-center justify-center relative min-h-[400px]">
+                <button onclick="prevSlide()" class="absolute left-6 p-4 bg-white rounded-full shadow-lg hover:bg-slate-50 font-bold z-10">‹</button>
+                <img id="modal-img" src="" class="max-h-[450px] object-contain drop-shadow-2xl transition-opacity duration-300" style="opacity: 1;">
+                <button onclick="nextSlide()" class="absolute right-6 p-4 bg-white rounded-full shadow-lg hover:bg-slate-50 font-bold z-10">›</button>
+                <div id="modal-dots" class="absolute bottom-6 flex space-x-2"></div>
+            </div>
+            <!-- Info -->
+            <div class="md:w-2/5 p-12 flex flex-col justify-center border-l border-slate-100">
+                <h3 id="modal-title" class="text-4xl font-black mb-2 text-slate-900"></h3>
+                <p id="modal-price" class="text-2xl font-bold text-brand-primary mb-8"></p>
+                <div class="space-y-4 text-slate-500">
+                    <p>✓ Pintado a mano</p>
+                    <p>✓ Material: Poliresina</p>
+                    <p>✓ Diseño 100% Personalizado</p>
+                </div>
+                <button onclick="closeProductModal()" class="mt-12 bg-slate-900 text-white font-black py-4 rounded-2xl">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // DATOS DE PRODUCTOS CORREGIDOS (Syntax Check)
+        const productsData = {
+            '8cm': {
+                title: 'Lucky Doll 8cm',
+                price: 'Desde 5,25€ + IVA',
+                images: ['assets/luckyDolls/8cm/Pic01.png',
+                'assets/luckyDolls/8cm/Pic02.png',
+                'assets/luckyDolls/8cm/Pic03.png',
+                'assets/luckyDolls/8cm/Pic04.png',
+                'assets/luckyDolls/8cm/Pic05.png',
+                'assets/luckyDolls/8cm/Pic06.png',
+                'assets/luckyDolls/8cm/Pic07.png']
+            },
+            '15cm': {
+                title: 'Lucky Doll 15cm',
+                price: 'Desde 9,86€ + IVA',
+                images: ['assets/luckyDolls/14cm/Pic03.png',
+                         'assets/luckyDolls/14cm/Pic05.png',
+                         'assets/luckyDolls/14cm/Pic07.png']
+            },
+            '18cm': {
+                title: 'Lucky Doll 18cm',
+                price: 'Desde 11,20€ + IVA',
+                images: ['assets/luckyDolls/18cm/Pic02.png',
+						 'assets/luckyDolls/18cm/Pic03.png',
+						 'assets/luckyDolls/18cm/Pic04.png']
+            },
+            '18cmSonido': {
+                title: 'Lucky Doll 18cm Sonido',
+                price: 'Desde 14,35€ + IVA',
+                images: ['assets/luckyDolls/18cmSonido/Pic01.png']
+            },
+            '40cm': {
+                title: 'Lucky Doll 40cm',
+                price: 'Desde 75,00€ + IVA',
+                images: ['assets/luckyDolls/40cm/Pic01.png']
+            },
+            'tamanoReal': {
+                title: 'Figura Tamaño Real',
+                price: 'Presupuesto Bajo Pedido',
+                images: ['assets/luckyDolls/Real/Pic01.png']
+            },
+            'vintage': {
+                title: 'Colección Vintage',
+                price: 'Desde 12,50€ + IVA',
+                images: ['assets/luckyDolls/Vintages/Pic01.png',
+						 'assets/luckyDolls/Vintages/Pic02.png',
+						 'assets/luckyDolls/Vintages/Pic03.png',
+						 'assets/luckyDolls/Vintages/Pic04.png',
+						 'assets/luckyDolls/Vintages/Pic05.png',
+						 'assets/luckyDolls/Vintages/Pic06.png',
+						 'assets/luckyDolls/Vintages/Pic07.png',
+						 'assets/luckyDolls/Vintages/Pic08.png',
+						 'assets/luckyDolls/Vintages/Pic09.png',
+						 'assets/luckyDolls/Vintages/Pic10.png',
+						 'assets/luckyDolls/Vintages/Pic11.png',
+						 'assets/luckyDolls/Vintages/Pic12.png',
+						 'assets/luckyDolls/Vintages/Pic13.png',
+						 'assets/luckyDolls/Vintages/Pic14.png',
+						 'assets/luckyDolls/Vintages/Pic15.png',
+						 'assets/luckyDolls/Vintages/Pic16.png',
+						 'assets/luckyDolls/Vintages/Pic17.png']
+            }
+        };
+
+        let activeKey = '';
+        let activeIdx = 0;
+
+        // FUNCIONES GLOBALES (Previenen ReferenceError)
+        window.openProductModal = function(key) {
+            if (!productsData[key]) return;
+            activeKey = key;
+            activeIdx = 0;
+            const modal = document.getElementById('modal-product');
+            if (modal) {
+                updateModal();
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        window.closeProductModal = function() {
+            document.getElementById('modal-product').classList.remove('open');
+            document.body.style.overflow = '';
+        };
+		
+		function updateModal() {
+			const product = productsData[activeKey];
+			const img = document.getElementById('modal-img');
+			
+			img.style.opacity = '0';
+			setTimeout(() => {
+				img.src = product.images[activeIdx];
+				img.style.opacity = '1';
+			}, 150);
+		
+			document.getElementById('modal-title').innerText = product.title;
+			document.getElementById('modal-price').innerText = product.price;
+		
+			const dots = document.getElementById('modal-dots');
+			dots.innerHTML = '';
+			product.images.forEach((_, i) => {
+				const dot = document.createElement('div');
+				dot.className = `w-2 h-2 rounded-full ${i === activeIdx ? 'bg-brand-primary' : 'bg-slate-300'}`;
+				dots.appendChild(dot);
+			});
+		}
+
+        window.nextSlide = function() {
+            if (!activeKey) return;
+            activeIdx = (activeIdx + 1) % productsData[activeKey].images.length;
+            updateModal();
+        };
+
+        window.prevSlide = function() {
+            if (!activeKey) return;
+            activeIdx = (activeIdx - 1 + productsData[activeKey].images.length) % productsData[activeKey].images.length;
+            updateModal();
+        };
+
+        // MENU MOVIL CORREGIDO
+		const menuToggle = document.getElementById('mobile-menu-toggle');
+		const mobileMenu = document.getElementById('mobile-menu');
+		
+		if (menuToggle && mobileMenu) {
+			menuToggle.addEventListener('click', () => {
+				menuToggle.classList.toggle('active');
+				mobileMenu.classList.toggle('active');
+			});
+		
+			document.querySelectorAll('.mobile-menu-link').forEach(link => {
+				link.addEventListener('click', () => {
+					mobileMenu.classList.remove('active');
+					menuToggle.classList.remove('active');
+				});
+			});
+		}
+
+    </script>
+</body>
+</html>
