@@ -11,115 +11,70 @@
             theme: {
                 extend: {
                     colors: {
-                        'brand-primary': '#227bf6',
-                        'brand-light': '#5BA3FF',
-                        'brand-dark': '#1A5FCC',
-                        'brand-secondary': '#0D47A1'
+                        'brand-primary': '#227bf6', /* Azul Vibrante Principal */
+                        'brand-dark': '#1a5fc2',    /* Azul Oscuro Profundo */
+                        'brand-black': '#000000',
+                        'brand-light': '#60a5fa'    /* Azul Claro Brillante */
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap');
         
-        /* CORRECCIÓN DE LAYOUT Y SCROLL */
-        html, body { 
-            font-family: 'Inter', sans-serif; 
+        body { 
+            font-family: 'Montserrat', sans-serif;
             width: 100%;
             max-width: 100vw;
-            overflow-x: hidden; /* Estricto para evitar scroll horizontal */
-            background: linear-gradient(135deg, #FAFBFC 0%, #F0F4F8 50%, #E3EEFA 100%);
-            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Animated Background Orbs */
-        @keyframes float-orb-1 {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.08; }
-            33% { transform: translate(50px, -80px) scale(1.1); opacity: 0.12; }
-            66% { transform: translate(-40px, 60px) scale(0.9); opacity: 0.1; }
-        }
-        @keyframes float-orb-2 {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.06; }
-            50% { transform: translate(-70px, -100px) scale(1.15); opacity: 0.1; }
-        }
-        @keyframes float-orb-3 {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.07; }
-            40% { transform: translate(60px, 90px) scale(1.05); opacity: 0.11; }
-            80% { transform: translate(-50px, -70px) scale(0.95); opacity: 0.09; }
-        }
-        @keyframes breathing-gradient {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.5; }
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, #227bf6, #5BA3FF);
-            top: 5%;
-            left: -10%;
-            animation: float-orb-1 25s ease-in-out infinite;
-        }
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #1A5FCC, #0D47A1);
-            bottom: 10%;
-            right: -5%;
-            animation: float-orb-2 30s ease-in-out infinite;
-        }
-        .orb-3 {
-            width: 450px;
-            height: 450px;
-            background: linear-gradient(135deg, #5BA3FF, #227bf6);
-            top: 40%;
-            left: 60%;
-            animation: float-orb-3 35s ease-in-out infinite;
+        /* ACTUALIZADO: Gradiente Azul */
+        .gradient-brand { 
+            background: linear-gradient(135deg, #227bf6 0%, #60a5fa 30%, #1a5fc2 70%, #000000 100%); 
         }
         
-        .breathing-bg {
-            background: linear-gradient(135deg, rgba(34, 123, 246, 0.05), rgba(91, 163, 255, 0.08));
-            animation: breathing-gradient 10s ease-in-out infinite;
+        .glass-effect { 
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        
+        .hover-lift { 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+        /* ACTUALIZADO: Sombra azul al hacer hover */
+        .hover-lift:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(34, 123, 246, 0.3); 
         }
 
-        /* Glass Effect - Light Theme */
-        .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(34, 123, 246, 0.15);
-            box-shadow: 0 8px 32px rgba(34, 123, 246, 0.1);
+        /* FLOATING ELEMENTS - VISIBLE */
+        @keyframes float-basketball {
+            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            25% { transform: translateY(-18px) translateX(12px) rotate(90deg); }
+            50% { transform: translateY(-30px) translateX(-8px) rotate(180deg); }
+            75% { transform: translateY(-22px) translateX(10px) rotate(270deg); }
+        }
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .floating-element {
+            position: absolute;
+            animation: float-basketball 8s ease-in-out infinite;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .spinning-ball {
+            animation: spin-slow 20s linear infinite;
         }
 
-        /* Navbar Glass */
-        .navbar-glass {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(34, 123, 246, 0.1);
-            box-shadow: 0 4px 20px rgba(34, 123, 246, 0.08);
-        }
-
-        /* Hover Effects */
-        .hover-lift {
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
-        }
-        .hover-lift:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 25px 50px rgba(34, 123, 246, 0.25);
-        }
-
-        /* Mobile Menu Animation - FULL SCREEN */
+        /* MOBILE MENU */
         .mobile-menu {
-            transform: translateY(-100%); /* Deslizar desde arriba */
+            transform: translateY(-100%);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 59; 
             opacity: 0;
@@ -131,7 +86,6 @@
             pointer-events: auto;
         }
 
-        /* Mobile Menu Overlay */
         .mobile-menu-overlay {
             display: none;
             position: fixed;
@@ -144,14 +98,15 @@
             display: block;
         }
 
-        /* Hamburger Menu Icon Animation */
+        /* HAMBURGER */
         .hamburger {
             display: flex;
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
-            z-index: 61; /* Asegurar que el botón siempre es clicable */
+            z-index: 61;
         }
+        /* ACTUALIZADO: Color azul en hamburger */
         .hamburger span {
             display: block;
             width: 28px;
@@ -170,522 +125,865 @@
             transform: rotate(-45deg) translate(7px, -7px);
         }
 
-        /* Responsive Typography */
+        /* RESPONSIVE TYPOGRAPHY */
         @media (max-width: 640px) {
-            .hero-title { font-size: 2.5rem !important; line-height: 1.1 !important; }
+            .hero-title { font-size: 2.5rem !important; line-height: 1.2 !important; }
             .hero-subtitle { font-size: 1.1rem !important; }
         }
 
-        /* CTA Button Glow */
-        .cta-glow {
-            box-shadow: 0 0 30px rgba(34, 123, 246, 0.3);
+        /* MODAL CAROUSEL */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 9999; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.95); 
+        }
+        .modal.active { 
+            display: flex; 
+            align-items: center; 
+            justify-center: center; 
+        }
+        .modal-content { 
+            position: relative; 
+            max-width: 90%; 
+            max-height: 90vh; 
+        }
+        .carousel-img { 
+            max-height: 80vh; 
+            width: auto; 
+            margin: 0 auto; 
+            display: block; 
+        }
+        .carousel-btn { 
+            position: absolute; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background: rgba(255,255,255,0.2); 
+            backdrop-filter: blur(10px); 
+            border: none; 
+            color: white; 
+            font-size: 2rem; 
+            padding: 1rem 1.5rem; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            border-radius: 50%; 
+        }
+        .carousel-btn:hover { 
+            background: rgba(255,255,255,0.4); 
+            transform: translateY(-50%) scale(1.1); 
+        }
+        .carousel-btn.prev { left: 2rem; }
+        .carousel-btn.next { right: 2rem; }
+        .close-modal { 
+            position: absolute; 
+            top: 2rem; 
+            right: 2rem; 
+            font-size: 3rem; 
+            color: white; 
+            cursor: pointer; 
+            background: rgba(255,255,255,0.2); 
+            backdrop-filter: blur(10px); 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: all 0.3s; 
+        }
+        .close-modal:hover { 
+            background: rgba(255,255,255,0.4); 
+            transform: rotate(90deg); 
+        }
+
+        /* TICKET SYSTEM MODIFICADO */
+        .ticket-stack {
+            perspective: 1000px;
+            position: relative;
+            /* CAMBIADO: min-height más bajo por defecto, la altura real se setea por JS */
+            min-height: 600px; 
+            transition: height 0.4s ease-out; /* Animación suave de altura */
+        }
+
+        .ticket {
+            position: absolute;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform-origin: center bottom;
+            cursor: pointer;
+        }
+
+        .ticket.active {
+            transform: translateY(0) scale(1) rotateX(0deg);
+            z-index: 10;
+            opacity: 1;
+        }
+
+        .ticket.stacked {
+            transform: translateY(-20px) scale(0.95) rotateX(5deg);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .ticket.hidden {
+            transform: translateY(40px) scale(0.9) rotateX(-10deg);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ticket-perforation {
+            position: relative;
+        }
+
+        /* ACTUALIZADO: Perforación azul */
+        .ticket-perforation::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 2px;
+            background-image: linear-gradient(to right, #227bf6 50%, transparent 50%);
+            background-size: 10px 2px;
+            background-repeat: repeat-x;
+        }
+
+        /* ACTUALIZADO: Header azul */
+        .ticket-header {
+            background: linear-gradient(135deg, #227bf6, #60a5fa);
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .ticket-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+
+        /* NUEVO: Contenedor de botones mejorado para visibilidad */
+        .nav-buttons-container {
+            position: relative;
+            z-index: 100; /* Asegura que esté siempre encima de las cartas */
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            /* Fondo sutil por si una carta muy larga pasa por debajo */
+            background: rgba(15, 23, 42, 0.95); 
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-btn {
+            background: #227bf6;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s;
         }
-        .cta-glow:hover {
-            box-shadow: 0 0 50px rgba(34, 123, 246, 0.5);
+
+        .nav-btn:hover:not(:disabled) {
+            background: #60a5fa;
             transform: scale(1.05);
         }
 
-        /* Card shadows */
-        .card-shadow {
-            box-shadow: 0 10px 40px rgba(34, 123, 246, 0.1);
-        }
-
-        /* Carousel Modal Styles */
-
-        .modal-overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: rgba(0, 0, 0, 0.85);
-			backdrop-filter: blur(5px);
-			opacity: 0;
-			pointer-events: none;
-			transition: opacity 0.3s ease;
-			z-index: 99999; /* Asegura que quede por encima de todo */
-		}
-		
-		.modal-overlay.open {
-			opacity: 1;
-			pointer-events: auto;
-		}
-		
-        .carousel-container {
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.open .carousel-container {
+        .nav-btn:disabled {
+            background: #475569;
+            color: #94a3b8;
+            cursor: not-allowed;
             transform: scale(1);
         }
     </style>
 </head>
-<body class="text-slate-800">
+<body class="bg-slate-950 text-white">
 
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-
-    <!-- No Overlay Needed for Fullscreen Menu Style, but keeping structure clean -->
-    <!-- <div id="mobile-menu-overlay" class="mobile-menu-overlay"></div> -->
-
-    <nav class="navbar-glass fixed w-full top-0 z-50">
-        <div class="container mx-auto px-4 sm:px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="text-xl sm:text-2xl font-black z-50 relative">
-                    <span class="bg-gradient-to-r from-brand-primary to-brand-light bg-clip-text text-transparent">
-                        MERCHANDREAM
-                    </span>
-                </div>
-
-                <div class="hidden md:flex space-x-8">
-                    <a href="#lucky-dolls" class="text-slate-600 hover:text-brand-primary transition-colors font-medium">Lucky Dolls</a>
-                    <a href="#weekend-experience" class="text-slate-600 hover:text-brand-primary transition-colors font-medium">Weekend Experience</a>
-                    <a href="#contacto" class="text-slate-600 hover:text-brand-primary transition-colors font-medium">Contacto</a>
-                </div>
-
-                <button id="mobile-menu-toggle" class="md:hidden focus:outline-none relative hamburger" aria-label="Abrir menú">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+    <!-- NAVBAR -->
+    <nav class="fixed w-full top-0 z-50 bg-slate-950 border-b border-slate-800">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="text-2xl font-black">
+                <span class="text-brand-primary">MERCHANDREAM</span>
             </div>
-        </div>
-
-        <!-- Full Screen Mobile Menu -->
-        <div id="mobile-menu" class="mobile-menu fixed inset-0 w-full h-screen bg-white md:hidden flex flex-col items-center justify-center">
-            <div class="absolute inset-0 breathing-bg -z-10"></div>
-            <div class="flex flex-col space-y-8 text-center">
-                <a href="#lucky-dolls" class="mobile-menu-link text-3xl font-black text-slate-800 hover:text-brand-primary transition-colors">Lucky Dolls</a>
-                <a href="#weekend-experience" class="mobile-menu-link text-3xl font-black text-slate-800 hover:text-brand-primary transition-colors">Weekend Experience</a>
-                <a href="#contacto" class="mobile-menu-link text-3xl font-black text-slate-800 hover:text-brand-primary transition-colors">Contacto</a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#inicio" class="text-sm font-medium text-gray-300 hover:text-brand-primary transition-colors">Inicio</a>
+                <a href="#productos" class="text-sm font-medium text-gray-300 hover:text-brand-primary transition-colors">Productos</a>
+                <a href="#weekend" class="text-sm font-medium text-gray-300 hover:text-brand-primary transition-colors">Weekend Experience</a>
+                <a href="#contacto" class="bg-brand-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-brand-light transition-all">
+                    Contacto
+                </a>
             </div>
-            <div class="absolute bottom-10 text-slate-400 text-sm">
-                &copy; 2026 Merchandream
+
+            <!-- Mobile Menu Toggle -->
+            <div class="md:hidden hamburger" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
 
-    <section class="min-h-screen flex items-center justify-center relative pt-20 px-4 sm:px-6">
-        <div class="breathing-bg absolute inset-0"></div>
-        <div class="container mx-auto text-center relative z-10 max-w-5xl">
-            <h1 class="hero-title text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight text-slate-900">
-                Monetiza la Pasión<br/>
-                <span class="bg-gradient-to-r from-brand-primary via-brand-light to-brand-dark bg-clip-text text-transparent">
-                    de tu Afición
-                </span>
-            </h1>
-            <p class="hero-subtitle text-xl sm:text-2xl md:text-3xl text-slate-600 mb-4 font-light">
-                Presentación oficial: Lucky Dolls & The Weekend Experience
-            </p>
-            <p class="text-base sm:text-lg text-slate-500 mb-12 max-w-3xl mx-auto">
-                Dos soluciones rentables para clubes que quieren generar ingresos recurrentes 
-                sin aumentar su carga operativa.
-            </p>
-            <a href="#lucky-dolls" class="cta-glow inline-block bg-gradient-to-r from-brand-primary to-brand-light text-white font-bold py-4 px-10 rounded-full text-lg">
-                Descubrir Soluciones
-            </a>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 left-0 w-full h-screen bg-slate-950" id="mobile-menu">
+        <div class="flex flex-col items-center justify-center h-full space-y-8 text-center px-6">
+            <a href="#inicio" class="text-2xl font-semibold text-white hover:text-brand-primary transition-colors mobile-menu-link">Inicio</a>
+            <a href="#productos" class="text-2xl font-semibold text-white hover:text-brand-primary transition-colors mobile-menu-link">Productos</a>
+            <a href="#weekend" class="text-2xl font-semibold text-white hover:text-brand-primary transition-colors mobile-menu-link">Weekend Experience</a>
+            <a href="#contacto" class="text-2xl font-semibold text-white hover:text-brand-primary transition-colors mobile-menu-link">Contacto</a>
         </div>
-    </section>
+    </div>
 
-    <section id="lucky-dolls" class="py-24 px-6">
-        <div class="container mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-4xl md:text-6xl font-black">Lucky Dolls</h2>
-                    <p class="text-slate-500 text-xl">Merchandising de poliresina premium</p>
-                </div>
-                <div class="hidden md:block text-brand-primary font-bold">Desliza para ver más →</div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- 8cm -->
-                <div onclick="openProductModal('8cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
-                    <div class="bg-slate-100 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
-                        <img src="assets/luckyDolls/8cm/Pic01.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="8cm">
-                    </div>
-                    <h3 class="font-black text-xl">Lucky Doll 8cm</h3>
-                    <p class="text-brand-primary font-bold">Desde 5,25€ + IVA</p>
-					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
-					Ver fotos →
-					</p>
-                </div>
-
-                <!-- 15cm -->
-                <div onclick="openProductModal('15cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
-                    <div class="bg-slate-100 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
-                        <img src="assets/luckyDolls/14cm/Pic03.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="15cm">
-                    </div>
-                    <h3 class="font-black text-xl">Lucky Doll 15cm</h3>
-                    <p class="text-brand-primary font-bold">Desde 9,86€ + IVA</p>
-					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
-					Ver fotos →
-					</p>
-                </div>
-
-                <!-- 18cm -->
-                <div onclick="openProductModal('18cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group border-2 border-brand-primary">
-                    <div class="bg-blue-50 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden relative">
-                        <img src="assets/luckyDolls/18cm/Pic02.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="18cm">
-                        <span class="absolute top-4 right-4 bg-brand-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">Top Ventas</span>
-                    </div>
-                    <h3 class="font-black text-xl">Lucky Doll 18cm</h3>
-                    <p class="text-brand-primary font-bold">Desde 11,20€ + IVA</p>
-					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
-					Ver fotos →
-					</p>
-                </div>
-
-                <!-- 18cm SONIDO -->
-                <div onclick="openProductModal('18cmSonido')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
-                    <div class="bg-yellow-50 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden relative">
-                        <img src="assets/luckyDolls/18cm/Pic02.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="Sonido">
-                        <span class="absolute bottom-4 right-4 text-2xl">🔊</span>
-                    </div>
-                    <h3 class="font-black text-xl">18cm con Sonido</h3>
-                    <p class="text-brand-primary font-bold">Desde 14,35€ + IVA</p>
-					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
-					Ver fotos →
-					</p>
-                </div>
-
-                <!-- 40cm -->
-                <div onclick="openProductModal('40cm')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
-                    <div class="bg-slate-100 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
-                        <img src="assets/luckyDolls/40cm/Pic01.png" class="h-4/5 object-contain group-hover:scale-110 transition-transform" alt="40cm">
-                    </div>
-                    <h3 class="font-black text-xl">40cm Coleccionista</h3>
-                    <p class="text-brand-primary font-bold">Desde 75,00€ + IVA</p>
-					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
-					Ver fotos →
-					</p>
-                </div>
-
-                <!-- TAMAÑO REAL -->
-                <div onclick="openProductModal('tamanoReal')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group bg-slate-900 text-white border-none">
-                    <div class="bg-white/10 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden relative">
-                        <img src="assets/luckyDolls/40cm/Pic01.png" class="h-4/5 object-contain opacity-50" alt="Real">
-                        <span class="absolute font-black text-center px-4 uppercase tracking-tighter text-xl">Escala 1:1 <br>Real</span>
-                    </div>
-                    <h3 class="font-black text-xl">Tamaño Real</h3>
-                    <p class="text-brand-light font-bold">Consultar</p>
-					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
-					Ver fotos →
-					</p>
-                </div>
-
-                <!-- VINTAGE -->
-                <div onclick="openProductModal('vintage')" class="glass rounded-3xl p-6 hover-lift cursor-pointer group">
-                    <div class="bg-orange-50 rounded-2xl h-60 flex items-center justify-center mb-4 overflow-hidden">
-                        <img src="assets/luckyDolls/Vintages/Pic01.png" class="h-4/5 object-contain sepia-[.3]" alt="Vintage">
-                    </div>
-                    <h3 class="font-black text-xl">Línea Vintage</h3>
-                    <p class="text-brand-primary font-bold">Desde 12,50€ + IVA</p>
-					<p class="text-sm text-slate-500 mt-2 group-hover:text-brand-primary transition">
-					Ver fotos →
-					</p>
+    <!-- HERO SECTION -->
+    <section id="inicio" class="gradient-brand min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Animated Floating Elements -->
+        <div class="floating-element spinning-ball" style="top: 12%; left: 7%; font-size: 8rem;">📦</div>
+        <div class="floating-element" style="top: 62%; right: 10%; font-size: 7rem; animation-delay: 2s;">🎯</div>
+        <div class="floating-element spinning-ball" style="top: 38%; right: 15%; font-size: 6rem; animation-delay: 1.5s;">🏆</div>
+        <div class="floating-element" style="bottom: 15%; left: 12%; font-size: 7rem; animation-delay: 3s;">⚽</div>
+        <div class="floating-element spinning-ball" style="top: 25%; right: 8%; font-size: 5rem; animation-delay: 4s;">🎨</div>
+        
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-brand-primary rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-brand-black rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 py-12 sm:py-20 relative z-10">
+            <div class="text-center max-w-5xl mx-auto">
+                <h1 class="hero-title text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight">
+                    Monetiza la Pasión
+                </h1>
+                <!-- CAMBIADO: text-orange-200 a text-blue-200 -->
+                <p class="hero-subtitle text-xl md:text-2xl mb-8 text-blue-200 font-semibold px-2">
+                    Soluciones premium de merchandising deportivo
+                </p>
+                <p class="text-lg md:text-xl mb-12 text-gray-200 max-w-3xl mx-auto px-4">
+                    Transformamos la conexión emocional con tu club en experiencias memorables y altamente rentables. 
+                    Creamos productos que inmortalizan momentos únicos y generan ingresos sostenibles.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center px-4">
+                    <a href="#productos" class="bg-brand-primary hover:bg-brand-light text-white font-bold py-4 px-8 rounded-full text-lg transition-all hover:scale-105 shadow-2xl">
+                        Ver Catálogo de Productos
+                    </a>
+                    <a href="#contacto" class="glass-effect hover:bg-white hover:text-brand-black font-bold py-4 px-8 rounded-full text-lg transition-all border-2 border-white">
+                        Solicitar Presupuesto
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="weekend-experience" class="py-24 relative bg-gradient-to-b from-transparent to-blue-50">
+    <!-- LUCKY DOLLS SECTION -->
+    <section id="productos" class="py-16 sm:py-24 bg-slate-900">
         <div class="container mx-auto px-4 sm:px-6">
-            <!-- TITULO Y OBJETIVOS PRINCIPALES -->
-            <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-center mb-4">
+                Nuestros Productos <span class="text-brand-primary">Premium</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-4 sm:mb-6 text-base sm:text-lg max-w-3xl mx-auto px-4">
+                Desde muñecos coleccionables hasta réplicas a tamaño real de tus ídolos
+            </p>
+            <p class="text-center text-yellow-400 font-semibold mb-12 sm:mb-16 text-sm sm:text-base px-4">
+                💰 Todos los precios son NETOS (sin IVA)
+            </p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                
+                <!-- 8 cm -->
+                <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-lift cursor-pointer" onclick="openCarousel('8cm')">
+                    <div class="bg-brand-primary rounded-xl p-4 mb-6 h-48 flex items-center justify-center overflow-hidden">
+                        <img src="assets/luckyDolls/8cm/Pic01.png" alt="8cm Lucky Doll" class="h-full object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3">Lucky Doll 8 cm</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4">Ideal para coleccionables del club</p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="text-2xl sm:text-3xl font-black text-brand-primary mb-1">5,25€ <span class="text-xs sm:text-sm text-gray-500">/unidad</span></p>
+                        <p class="text-xs text-yellow-400 mb-2">+ IVA</p>
+                        <p class="text-xs sm:text-sm text-gray-400">Pedido mínimo: 100 unidades</p>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-brand-primary">👆 Click para ver más fotos</p>
+                </div>
+
+                <!-- 15 cm -->
+                <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-lift cursor-pointer" onclick="openCarousel('15cm')">
+                    <div class="bg-brand-black rounded-xl p-4 mb-6 h-48 flex items-center justify-center overflow-hidden">
+                        <img src="assets/luckyDolls/14cm/Pic03.png" alt="15cm Lucky Doll" class="h-full object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3">Lucky Doll 15 cm</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4">Ideal para merchandising en tienda oficial y eventos especiales</p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="text-2xl sm:text-3xl font-black text-brand-primary mb-1">9,86€ <span class="text-xs sm:text-sm text-gray-500">/unidad</span></p>
+                        <p class="text-xs text-yellow-400 mb-2">+ IVA</p>
+                        <p class="text-xs sm:text-sm text-gray-400">Pedido mínimo: 100 unidades</p>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-brand-primary">👆 Click para ver más fotos</p>
+                </div>
+
+                <!-- 18 cm -->
+                <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-lift border-2 border-brand-primary cursor-pointer relative" onclick="openCarousel('18cm')">
+                    <div class="absolute top-4 right-4 bg-brand-primary text-white px-3 py-1 rounded-full text-xs font-bold">
+                        MÁS VENDIDO
+                    </div>
+                    <div class="bg-brand-primary rounded-xl p-4 mb-6 h-48 flex items-center justify-center overflow-hidden">
+                        <img src="assets/luckyDolls/18cm/Pic02.png" alt="18cm Lucky Doll" class="h-full object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3">Lucky Doll 18 cm</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4">El formato estrella para coleccionistas y aficionados</p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="text-2xl sm:text-3xl font-black text-brand-primary mb-1">11,20€ <span class="text-xs sm:text-sm text-gray-500">/unidad</span></p>
+                        <p class="text-xs text-yellow-400 mb-2">+ IVA</p>
+                        <p class="text-xs sm:text-sm text-gray-400">Pedido mínimo: 100 unidades</p>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-brand-primary">👆 Click para ver más fotos</p>
+                </div>
+
+                <!-- 18 cm con Sonido -->
+                <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-lift cursor-pointer" onclick="openCarousel('18cmSonido')">
+                    <div class="bg-gradient-to-br from-brand-primary to-brand-black rounded-xl p-4 mb-6 h-48 flex items-center justify-center overflow-hidden">
+                        <img src="assets/luckyDolls/18cmSonido/Pic01.png" alt="18cm Sonido Lucky Doll" class="h-full object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3">Lucky Doll 18 cm + Sonido</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4">Con cánticos personalizados o himnos del club</p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="text-2xl sm:text-3xl font-black text-brand-primary mb-1">14,90€ <span class="text-xs sm:text-sm text-gray-500">/unidad</span></p>
+                        <p class="text-xs text-yellow-400 mb-2">+ IVA</p>
+                        <p class="text-xs sm:text-sm text-gray-400">Pedido mínimo: 100 unidades</p>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-brand-primary">👆 Click para ver más fotos</p>
+                </div>
+
+                <!-- 40 cm -->
+                <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-lift cursor-pointer" onclick="openCarousel('40cm')">
+                    <div class="bg-slate-800 rounded-xl p-4 mb-6 h-48 flex items-center justify-center overflow-hidden">
+                        <img src="assets/luckyDolls/40cm/Pic01.png" alt="40cm Lucky Doll" class="h-full object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3">Lucky Doll 40 cm</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4">Edición premium para palcos VIP y regalos institucionales</p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="text-2xl sm:text-3xl font-black text-brand-primary mb-1">75,00€ <span class="text-xs sm:text-sm text-gray-500">/unidad</span></p>
+                        <p class="text-xs text-yellow-400 mb-2">+ IVA</p>
+                        <p class="text-xs sm:text-sm text-gray-400">Pedido mínimo: 50 unidades</p>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-brand-primary">👆 Click para ver más fotos</p>
+                </div>
+
+                <!-- Tamaño Real -->
+                <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-lift bg-gradient-to-br from-slate-900 to-brand-black border-2 border-brand-primary cursor-pointer relative" onclick="openCarousel('real')">
+                    <div class="absolute top-4 right-4 bg-brand-primary text-white px-3 py-1 rounded-full text-xs font-bold">
+                        EXCLUSIVO
+                    </div>
+                    <div class="bg-slate-950 rounded-xl p-4 mb-6 h-48 flex items-center justify-center overflow-hidden">
+                        <img src="assets/luckyDolls/Real/Pic01.png" alt="Tamaño Real" class="h-full object-contain">
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3">Réplica Tamaño Real</h3>
+                    <p class="text-sm sm:text-base text-gray-400 mb-4">Para museo del club, hall del estadio o activaciones especiales</p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="text-2xl sm:text-3xl font-black text-brand-primary mb-1">3.900€ <span class="text-xs sm:text-sm text-gray-500">/unidad</span></p>
+                        <p class="text-xs text-yellow-400 mb-2">+ IVA</p>
+                        <p class="text-xs sm:text-sm text-gray-400">Disponible desde 1 unidad</p>
+                    </div>
+                    <p class="text-xs text-center mt-4 text-brand-primary">👆 Click para ver más fotos</p>
+                </div>
+
+                <!-- Vintage (CAMBIADO: Fondo bg-blue-900) -->
+                <div class="glass-effect rounded-2xl p-6 sm:p-8 hover-lift col-span-full cursor-pointer" onclick="openCarousel('vintage')">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="bg-blue-900 rounded-xl p-4 h-64 flex items-center justify-center overflow-hidden">
+                            <img src="assets/luckyDolls/Vintages/Pic01.png" alt="Vintage Collection" class="h-full object-contain">
+                        </div>
+                        <div>
+                            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Colección Vintage</h3>
+                            <p class="text-sm sm:text-base text-gray-300 mb-6 lg:text-lg">
+                                Homenaje a las leyendas con diseños retro que evocan las épocas doradas. 
+                                Perfectos para aniversarios del club o campañas nostálgicas.
+                            </p>
+                            <div class="flex gap-6 flex-wrap">
+                                <div>
+                                    <p class="text-xl sm:text-2xl font-black text-brand-primary">7,25€</p>
+                                    <p class="text-xs text-yellow-400">+ IVA</p>
+                                    <p class="text-xs sm:text-sm text-gray-400">100 unidades</p>
+                                </div>
+                                <div>
+                                    <p class="text-xl sm:text-2xl font-black text-brand-primary">6,72€</p>
+                                    <p class="text-xs text-yellow-400">+ IVA</p>
+                                    <p class="text-xs sm:text-sm text-gray-400">250 unidades</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-center mt-6 text-brand-primary">👆 Click para ver más fotos</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESO DE PRODUCCIÓN -->
+    <section class="py-16 sm:py-24 bg-slate-950">
+        <div class="container mx-auto px-4 sm:px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-center mb-12 sm:mb-16">
+                Proceso de <span class="text-brand-primary">Producción</span>
+            </h2>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid sm:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="bg-brand-primary w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl sm:text-4xl font-black text-white">
+                            1
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-4">Molde Personalizado</h3>
+                        <p class="text-4xl sm:text-5xl font-black text-brand-primary mb-2">15 días</p>
+                        <p class="text-sm sm:text-base text-gray-400">Diseño y validación del prototipo exclusivo para tu club</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="bg-brand-black border-2 border-brand-primary w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl sm:text-4xl font-black text-white">
+                            2
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-4">Fabricación</h3>
+                        <p class="text-4xl sm:text-5xl font-black text-brand-primary mb-2">45-60 días</p>
+                        <p class="text-sm sm:text-base text-gray-400">Producción con control de calidad en cada fase</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="bg-brand-primary w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl sm:text-4xl font-black text-white">
+                            3
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold mb-4">Transporte</h3>
+                        <p class="text-4xl sm:text-5xl font-black text-brand-primary mb-2">25 días</p>
+                        <p class="text-sm sm:text-base text-gray-400">Envío seguro hasta destino</p>
+                    </div>
+                </div>
+                
+                <div class="mt-12 sm:mt-16 glass-effect rounded-2xl p-6 sm:p-8 text-center">
+                    <p class="text-xl sm:text-2xl font-bold mb-4">⏱️ Tiempo Total Estimado</p>
+                    <p class="text-4xl sm:text-6xl font-black text-brand-primary">85-100 días</p>
+                    <p class="text-sm sm:text-base text-gray-400 mt-4">Ideal para planificar campañas de temporada o aniversarios</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WEEKEND EXPERIENCE - TICKET SYSTEM -->
+    <section id="weekend" class="py-24 bg-slate-900 relative">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12 max-w-4xl mx-auto">
                 <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6">
-                    <span class="bg-gradient-to-r from-brand-primary to-brand-dark bg-clip-text text-transparent">
-                        The Weekend Experience
-                    </span>
+                    <span class="text-brand-primary">The Weekend Experience</span>
                 </h2>
                 <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-12 mb-8">
                     <div class="flex items-center justify-center gap-2">
                         <span class="bg-brand-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">1</span>
-                        <h3 class="text-xl sm:text-2xl text-slate-700 font-bold">Fidelización</h3>
+                        <h3 class="text-xl sm:text-2xl text-gray-300 font-bold">Fidelización</h3>
                     </div>
                     <div class="flex items-center justify-center gap-2">
-                        <span class="bg-brand-secondary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">2</span>
-                        <h3 class="text-xl sm:text-2xl text-slate-700 font-bold">Financiación</h3>
+                        <span class="bg-brand-dark text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">2</span>
+                        <h3 class="text-xl sm:text-2xl text-gray-300 font-bold">Financiación</h3>
                     </div>
                 </div>
-                <p class="text-base sm:text-lg text-slate-600 max-w-3xl mx-auto">
+                <p class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">
                     Fortalece la unión con aficionados y peñistas mientras generas recursos económicos alternativos.
                 </p>
             </div>
 
-            <!-- DESCRIPCION DEL SORTEO -->
-            <div class="glass rounded-3xl p-8 sm:p-12 max-w-6xl mx-auto mb-12 card-shadow">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <div class="uppercase tracking-wide text-brand-primary font-bold text-sm mb-2">La Experiencia</div>
-                        <h3 class="text-3xl font-black mb-6 text-slate-900 leading-tight">
-                            Acompaña al equipo en un desplazamiento oficial
-                        </h3>
-                        <p class="text-lg text-slate-700 mb-6">
-                            Dos ganadores vivirán la experiencia de acompañar al equipo en un desplazamiento oficial, con 
-                            <strong>todos los gastos de viaje, alojamiento y manutención cubiertos</strong>.
-                        </p>
-                        
-                        <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
-                            <h4 class="font-bold text-slate-800 mb-3">Detalles del Sorteo:</h4>
-                            <ul class="space-y-3">
-                                <li class="flex items-start">
-                                    <span class="text-brand-primary mr-2 text-xl">•</span>
-                                    <span class="text-slate-700"><strong>Formato:</strong> Una papeleta da derecho a participar en 1 sorteo.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-brand-primary mr-2 text-xl">•</span>
-                                    <span class="text-slate-700"><strong>Calendario:</strong> Primer sorteo previsto para la segunda vuelta de la competición.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-brand-primary mr-2 text-xl">•</span>
-                                    <span class="text-slate-700"><strong>Destino:</strong> El desplazamiento será seleccionado por el Club.</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- AUDIENCIA Y ALCANCE (CASO PRACTICO) -->
-                    <div class="glass bg-white/60 p-6 rounded-2xl border border-brand-primary/20 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg z-10">CASO: MÁLAGA CF</div>
-                        <h4 class="text-xl font-bold mb-4 text-slate-800 border-b pb-2">Audiencia y Alcance Potencial</h4>
-                        
-                        <div class="grid grid-cols-2 gap-4 text-sm mb-4">
-                            <div>
-                                <p class="text-slate-500 text-xs uppercase font-bold">Base Social</p>
-                                <p class="text-slate-900 font-bold">~27.000 Socios</p>
-                            </div>
-                            <div>
-                                <p class="text-slate-500 text-xs uppercase font-bold">Estadio</p>
-                                <p class="text-slate-900 font-bold">~24.000 Media</p>
-                            </div>
-                            <div>
-                                <p class="text-slate-500 text-xs uppercase font-bold">Población Local</p>
-                                <p class="text-slate-900 font-bold">600k (Ciudad)</p>
-                                <p class="text-slate-500 text-xs">1.8M (Provincia)</p>
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-4">
-                            <p class="text-brand-primary font-bold text-xs uppercase mb-2">Impacto Digital</p>
-                            <div class="space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-slate-600">Instagram</span>
-                                    <span class="font-bold text-slate-800">+1.1 Millones</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-600">Facebook</span>
-                                    <span class="font-bold text-slate-800">1 Millón</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-600">Twitter (X)</span>
-                                    <span class="font-bold text-slate-800">+100.000</span>
-                                </div>
-                                <div class="text-xs text-slate-500 pt-1 mt-1 border-t border-slate-200">
-                                    *Impulso en TikTok ("Malagamanía") con influencers como RoRo y BadCharly.
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-xs text-slate-500 italic">
-                            La experiencia atrae tanto a socios como a aficionados al fútbol en general.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PROPUESTA DE SORTEO Y RECAUDACION -->
-            <div class="grid lg:grid-cols-2 gap-6 max-w-6xl mx-auto mb-12">
-                <!-- ESTRUCTURA DE PRECIOS -->
-                <div class="glass rounded-2xl p-8 card-shadow bg-gradient-to-br from-white to-blue-50">
-                     <h4 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
-                        <span>🎟️</span> Estructura de Participación
-                    </h4>
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-center border-b border-slate-200 pb-4">
-                            <div>
-                                <p class="font-bold text-slate-900 text-lg">PVP General</p>
-                                <p class="text-xs text-slate-500">1 Papeleta = 1 Sorteo</p>
-                            </div>
-                            <div class="text-3xl font-black text-brand-primary">20 €</div>
-                        </div>
-                        
-                        <div class="flex justify-between items-center bg-brand-primary/5 p-4 rounded-lg border border-brand-primary/10">
-                            <div>
-                                <p class="font-bold text-slate-900 text-lg">Promoción Socios</p>
-                                <p class="text-xs text-brand-primary font-semibold">¡Bonificación del 12.5%!</p>
-                            </div>
-                            <div class="text-3xl font-black text-brand-dark">2 x 35 €</div>
-                        </div>
-
-                         <div class="mt-6">
-                            <p class="text-sm font-bold text-slate-800 mb-3">Canales de Distribución:</p>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="bg-white p-3 rounded-lg shadow-sm text-center border border-slate-100">
-                                    <span class="text-xl">🏟️</span>
-                                    <p class="text-xs font-bold text-slate-700 mt-1">Tienda Oficial</p>
-                                    <p class="text-[10px] text-slate-500">Días de partido</p>
-                                </div>
-                                <div class="bg-white p-3 rounded-lg shadow-sm text-center border border-slate-100">
-                                    <span class="text-xl">💻</span>
-                                    <p class="text-xs font-bold text-slate-700 mt-1">Web Merchandream</p>
-                                    <p class="text-[10px] text-slate-500">Exclusiva evento</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ESTIMACIONES ECONOMICAS -->
-                <div class="glass rounded-2xl p-8 card-shadow relative overflow-hidden flex flex-col justify-center">
-                    <h4 class="text-xl font-bold mb-6 text-slate-800">Previsión de Recaudación</h4>
-                    
-                    <div class="space-y-8">
-                        <!-- Estimacion 1 (FIXED OVERLAP) -->
-                        <div class="relative pl-6 border-l-4 border-brand-light pt-6">
-                            <span class="absolute -left-6 top-0 bg-brand-light text-white text-[10px] font-bold px-2 py-1 rounded-r shadow-sm">ESTIMACIÓN 1</span>
-                            <div class="flex justify-between items-end mb-1">
-                                <p class="text-slate-600 text-sm">Venta de <strong class="text-slate-800">50.000 papeletas</strong></p>
-                            </div>
-                            <p class="text-4xl sm:text-5xl font-black text-slate-800 tracking-tight">875.000 €</p>
-                        </div>
-                        
-                        <!-- Estimacion 2 (FIXED OVERLAP) -->
-                        <div class="relative pl-6 border-l-4 border-brand-dark pt-6">
-                            <span class="absolute -left-6 top-0 bg-brand-dark text-white text-[10px] font-bold px-2 py-1 rounded-r shadow-sm">ESTIMACIÓN 2 (Escenario Ampliado)</span>
-                            <div class="flex justify-between items-end mb-1">
-                                <p class="text-slate-600 text-sm">Venta de <strong class="text-slate-800">100.000 papeletas</strong></p>
-                            </div>
-                            <p class="text-4xl sm:text-5xl font-black text-slate-800 tracking-tight">1.750.000 €</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GESTION Y REPARTO -->
-            <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
-                <!-- Modelo de Reparto -->
-                <div class="glass p-6 rounded-2xl text-center flex flex-col justify-center">
-                    <h5 class="font-bold text-slate-700 mb-4">Modelo de Reparto</h5>
-                    <div class="flex items-center justify-center space-x-2">
-                        <div class="text-center">
-                            <div class="text-3xl font-black text-brand-primary">50%</div>
-                            <p class="text-xs font-bold text-slate-600">CLUB</p>
-                        </div>
-                        <div class="text-xl text-slate-300">+</div>
-                        <div class="text-center">
-                            <div class="text-3xl font-black text-brand-light">50%</div>
-                            <p class="text-xs font-bold text-slate-600">MERCHANDREAM</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gestion Integral -->
-                <div class="glass p-6 rounded-2xl md:col-span-2">
-                    <h5 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                        <span>⚙️</span> Gestión Integral por Merchandream
-                    </h5>
-                    <p class="text-sm text-slate-600 mb-4">Asumimos la responsabilidad total para liberar al club de carga operativa.</p>
-                    <div class="grid sm:grid-cols-2 gap-4">
-                        <div class="bg-white/50 p-3 rounded-lg border border-slate-100">
-                            <p class="text-xs font-bold text-brand-secondary mb-1">ADMINISTRACIÓN Y FISCALIDAD</p>
-                            <p class="text-xs text-slate-600">Gestión completa, incluido el pago de impuestos correspondientes a Hacienda.</p>
-                        </div>
-                        <div class="bg-white/50 p-3 rounded-lg border border-slate-100">
-                            <p class="text-xs font-bold text-brand-secondary mb-1">DESARROLLO Y EJECUCIÓN</p>
-                            <p class="text-xs text-slate-600">Liderazgo de la implementación operativa de todo el sorteo.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PLAN DE COMUNICACION Y FASES -->
-            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 mb-12">
-                <div class="glass rounded-xl p-8 hover-lift">
-                    <div class="text-4xl mb-4">📢</div>
-                    <h4 class="font-bold text-xl mb-3 text-slate-800">Plan de Comunicación</h4>
-                    <p class="text-slate-600 mb-4 text-sm">Promoción conjunta fundamental para el éxito.</p>
-                    <ul class="text-sm space-y-3 text-slate-600">
-                        <li class="flex items-start">
-                            <span class="text-brand-primary mr-2 font-bold">➢</span> 
-                            <span><strong>Compromiso del Club:</strong> Difusión mediante comunicados oficiales, web, email y redes sociales.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-brand-primary mr-2 font-bold">➢</span> 
-                            <span><strong>Video Promocional:</strong> Producción de alta calidad con jugadores influyentes para generar entusiasmo.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="glass rounded-xl p-8 hover-lift">
-                    <div class="text-4xl mb-4">🚀</div>
-                    <h4 class="font-bold text-xl mb-3 text-slate-800">Fases del Proyecto</h4>
-                    <div class="relative border-l-2 border-brand-primary/30 ml-3 pl-6 space-y-6">
-                        <div class="relative">
-                            <span class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-brand-primary border-2 border-white shadow"></span>
-                            <h5 class="font-bold text-slate-800">Fase 1: Formalización</h5>
-                            <p class="text-xs text-slate-600 mt-1">Firma del contrato (Marco de colaboración Málaga CF - Merchandream).</p>
-                        </div>
-                        <div class="relative">
-                            <span class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-brand-light border-2 border-white shadow"></span>
-                            <h5 class="font-bold text-slate-800">Fase 2: Desarrollo y Presentación</h5>
-                            <p class="text-xs text-slate-600 mt-1">Elaboración de documentación y presentación conjunta a la afición.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- OBSERVACION CLAVE -->
+            <!-- TICKET STACK SYSTEM -->
             <div class="max-w-4xl mx-auto">
-                <div class="bg-gradient-to-r from-brand-secondary to-brand-dark rounded-xl p-1 shadow-lg">
-                    <div class="bg-white rounded-lg p-6 text-center">
-                        <p class="font-bold text-brand-secondary uppercase text-xs mb-2 tracking-widest">Observación Clave</p>
-                        <p class="text-slate-800 font-medium text-lg leading-relaxed">
-                            "Este proyecto no es solo una iniciativa de engagement para la afición, sino una <span class="text-brand-primary font-bold">herramienta financiera concreta</span> diseñada para generar recursos económicos alternativos y directos para la entidad."
-                        </p>
+                <div class="ticket-stack" id="ticketStack">
+                    
+                    <!-- TICKET 1: Introducción -->
+                    <div class="ticket active" data-ticket="1">
+                        <div class="ticket-header">
+                            <div class="ticket-number">SECCIÓN 1/6</div>
+                            <h3 class="text-2xl font-black mb-2">La Experiencia</h3>
+                            <p class="text-sm opacity-90">Acompaña al equipo en un desplazamiento oficial</p>
+                        </div>
+                        <div class="p-8 text-gray-800">
+                            <div class="ticket-perforation mb-6"></div>
+                            <p class="text-lg mb-6 leading-relaxed">
+                                Dos ganadores vivirán la experiencia de acompañar al equipo en un desplazamiento oficial, con 
+                                <strong>todos los gastos de viaje, alojamiento y manutención cubiertos</strong>.
+                            </p>
+                            
+                            <!-- CAMBIADO: bg-blue-50 border-blue-200 -->
+                            <div class="bg-blue-50 rounded-xl p-6 border border-blue-200">
+                                <h4 class="font-bold text-gray-800 mb-4 text-lg">Detalles del Sorteo:</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <span class="text-brand-primary mr-3 text-xl font-bold">•</span>
+                                        <span class="text-gray-700"><strong>Formato:</strong> Una papeleta da derecho a participar en 1 sorteo.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-brand-primary mr-3 text-xl font-bold">•</span>
+                                        <span class="text-gray-700"><strong>Calendario:</strong> Primer sorteo previsto para la segunda vuelta de la competición.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-brand-primary mr-3 text-xl font-bold">•</span>
+                                        <span class="text-gray-700"><strong>Destino:</strong> El desplazamiento será seleccionado por el Club.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TICKET 2: Audiencia y Alcance -->
+                    <div class="ticket stacked" data-ticket="2">
+                        <div class="ticket-header">
+                            <div class="ticket-number">SECCIÓN 2/6</div>
+                            <h3 class="text-2xl font-black mb-2">Audiencia y Alcance</h3>
+                            <p class="text-sm opacity-90">Caso de Éxito Práctico</p>
+                        </div>
+                        <div class="p-8 text-gray-800">
+                            <div class="ticket-perforation mb-6"></div>
+                            <!-- CAMBIADO: from-blue-50 to-blue-100 border-blue-200 -->
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl border border-blue-200 mb-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h4 class="text-xl font-bold text-gray-800">Audiencia Potencial</h4>
+                                    <span class="bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full">CASO REAL</span>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    <div class="bg-white p-4 rounded-lg">
+                                        <p class="text-gray-500 text-xs uppercase font-bold mb-1">Base Social</p>
+                                        <p class="text-gray-900 font-black text-2xl">~27.000</p>
+                                        <p class="text-gray-600 text-sm">Socios</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg">
+                                        <p class="text-gray-500 text-xs uppercase font-bold mb-1">Estadio</p>
+                                        <p class="text-gray-900 font-black text-2xl">~24.000</p>
+                                        <p class="text-gray-600 text-sm">Media asistencia</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-lg col-span-2">
+                                        <p class="text-gray-500 text-xs uppercase font-bold mb-1">Población Local</p>
+                                        <div class="flex justify-around">
+                                            <div>
+                                                <p class="text-gray-900 font-black text-2xl">600k</p>
+                                                <p class="text-gray-600 text-xs">Ciudad</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-gray-900 font-black text-2xl">1.8M</p>
+                                                <p class="text-gray-600 text-xs">Provincia</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-4 rounded-lg">
+                                    <p class="text-brand-primary font-bold text-xs uppercase mb-3">Impacto Digital</p>
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-600 font-medium">Instagram</span>
+                                            <span class="font-black text-gray-800">+1.1M</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-600 font-medium">Facebook</span>
+                                            <span class="font-black text-gray-800">1M</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-gray-600 font-medium">Twitter (X)</span>
+                                            <span class="font-black text-gray-800">+100k</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 italic text-center">
+                                La experiencia atrae tanto a socios como a aficionados en general
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- TICKET 3: Estructura de Participación -->
+                    <div class="ticket hidden" data-ticket="3">
+                        <div class="ticket-header">
+                            <div class="ticket-number">SECCIÓN 3/6</div>
+                            <h3 class="text-2xl font-black mb-2">Estructura de Participación</h3>
+                            <p class="text-sm opacity-90">Precios y Promociones</p>
+                        </div>
+                        <div class="p-8 text-gray-800">
+                            <div class="ticket-perforation mb-6"></div>
+                            <div class="space-y-6">
+                                <div class="flex justify-between items-center border-b-2 border-gray-200 pb-4">
+                                    <div>
+                                        <p class="font-bold text-gray-900 text-xl">PVP General</p>
+                                        <p class="text-sm text-gray-500">1 Papeleta = 1 Sorteo</p>
+                                    </div>
+                                    <div class="text-4xl font-black text-brand-primary">20€</div>
+                                </div>
+                                
+                                <!-- CAMBIADO: from-blue-50 to-blue-100 -->
+                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-2 border-brand-primary">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <p class="font-bold text-gray-900 text-xl mb-1">Promoción Socios</p>
+                                            <p class="text-sm text-brand-primary font-bold">¡Bonificación del 12.5%!</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-4xl font-black text-brand-primary">17,50€</div>
+                                            <p class="text-xs text-gray-600 line-through">20,00€</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-gray-100 rounded-xl p-6">
+                                    <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                        <span>💳</span> Métodos de Pago
+                                    </h4>
+                                    <ul class="space-y-2 text-gray-700">
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-brand-primary">✓</span>
+                                            <span>Tarjeta de crédito/débito</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-brand-primary">✓</span>
+                                            <span>Transferencia bancaria</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-brand-primary">✓</span>
+                                            <span>Taquillas del estadio</span>
+                                        </li>
+                                        <li class="flex items-center gap-2">
+                                            <span class="text-brand-primary">✓</span>
+                                            <span>Tienda oficial del club</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TICKET 4: Proyección de Ingresos -->
+                    <div class="ticket hidden" data-ticket="4">
+                        <div class="ticket-header">
+                            <div class="ticket-number">SECCIÓN 4/6</div>
+                            <h3 class="text-2xl font-black mb-2">Proyección de Ingresos</h3>
+                            <p class="text-sm opacity-90">Estimaciones Conservadoras</p>
+                        </div>
+                        <div class="p-8 text-gray-800">
+                            <div class="ticket-perforation mb-6"></div>
+                            <div class="space-y-8">
+                                <!-- Estimación 1 -->
+                                <div class="bg-gradient-to-br from-gray-100 to-gray-200 p-6 rounded-xl border-2 border-gray-300">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full">ESTIMACIÓN 1</span>
+                                        <span class="text-sm text-gray-600">Escenario Base</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-3">Venta de <strong class="text-gray-900 text-lg">50.000 papeletas</strong></p>
+                                    <p class="text-5xl font-black text-gray-600">875.000€</p>
+                                    <p class="text-sm text-gray-600 mt-2">Ingresos brutos totales</p>
+                                </div>
+
+                                <!-- Estimación 2 -->
+                                <!-- CAMBIADO: from-blue-50 to-blue-100 -->
+                                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border-2 border-brand-primary">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="bg-brand-primary text-white text-xs font-bold px-3 py-1 rounded-full">ESTIMACIÓN 2</span>
+                                        <span class="text-sm text-gray-600">Escenario Ampliado</span>
+                                    </div>
+                                    <p class="text-gray-700 mb-3">Venta de <strong class="text-gray-900 text-lg">100.000 papeletas</strong></p>
+                                    <p class="text-5xl font-black text-brand-primary">1.750.000€</p>
+                                    <p class="text-sm text-gray-600 mt-2">Ingresos brutos totales</p>
+                                </div>
+
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                                    <p class="text-sm text-yellow-800">
+                                        <strong>Nota:</strong> Las estimaciones se basan en casos de éxito reales en clubes similares
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TICKET 5: Modelo de Reparto y Gestión -->
+                    <div class="ticket hidden" data-ticket="5">
+                        <div class="ticket-header">
+                            <div class="ticket-number">SECCIÓN 5/6</div>
+                            <h3 class="text-2xl font-black mb-2">Modelo de Reparto</h3>
+                            <p class="text-sm opacity-90">Gestión Integral</p>
+                        </div>
+                        <div class="p-8 text-gray-800">
+                            <div class="ticket-perforation mb-6"></div>
+                            
+                            <!-- Reparto Visual RESPONSIVE -->
+                            <div class="bg-gradient-to-br from-gray-100 to-gray-200 p-8 rounded-xl mb-6">
+                                <h4 class="font-bold text-gray-800 mb-6 text-center text-lg">Distribución de Ingresos</h4>
+                                <!-- CAMBIADO: gap responsive (gap-2 en móvil, gap-8 en desktop) -->
+                                <div class="flex items-center justify-center gap-2 sm:gap-8">
+                                    <div class="text-center">
+                                        <!-- CAMBIADO: Tamaños w-20 h-20 en móvil, w-32 h-32 en desktop -->
+                                        <div class="w-20 h-20 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-brand-primary to-brand-dark flex items-center justify-center mb-3 shadow-xl">
+                                            <!-- CAMBIADO: Texto 2xl en móvil, 5xl en desktop -->
+                                            <span class="text-2xl sm:text-5xl font-black text-white">50%</span>
+                                        </div>
+                                        <p class="font-bold text-gray-800 text-sm sm:text-lg">CLUB</p>
+                                    </div>
+                                    <!-- CAMBIADO: Texto + tamaño responsive -->
+                                    <div class="text-2xl sm:text-4xl text-gray-400 font-black">+</div>
+                                    <div class="text-center">
+                                        <div class="w-20 h-20 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-brand-light to-brand-primary flex items-center justify-center mb-3 shadow-xl">
+                                            <span class="text-2xl sm:text-5xl font-black text-white">50%</span>
+                                        </div>
+                                        <p class="font-bold text-gray-800 text-sm sm:text-lg">MERCHANDREAM</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Gestión Integral -->
+                            <div class="bg-white border-2 border-gray-200 rounded-xl p-6">
+                                <h5 class="font-bold text-gray-800 mb-4 flex items-center gap-2 text-lg">
+                                    <span>⚙️</span> Gestión Integral por Merchandream
+                                </h5>
+                                <p class="text-sm text-gray-600 mb-4">Asumimos la responsabilidad total para liberar al club de carga operativa.</p>
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <!-- CAMBIADO: bg-blue-50 border-blue-200 -->
+                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                        <p class="text-xs font-bold text-brand-primary mb-2">ADMINISTRACIÓN Y FISCALIDAD</p>
+                                        <p class="text-xs text-gray-700">Gestión completa, incluido el pago de impuestos correspondientes a Hacienda.</p>
+                                    </div>
+                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                        <p class="text-xs font-bold text-brand-primary mb-2">DESARROLLO Y EJECUCIÓN</p>
+                                        <p class="text-xs text-gray-700">Liderazgo de la implementación operativa de todo el sorteo.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TICKET 6: Plan de Comunicación y Fases -->
+                    <div class="ticket hidden" data-ticket="6">
+                        <div class="ticket-header">
+                            <div class="ticket-number">SECCIÓN 6/6</div>
+                            <h3 class="text-2xl font-black mb-2">Plan de Acción</h3>
+                            <p class="text-sm opacity-90">Comunicación y Fases del Proyecto</p>
+                        </div>
+                        <div class="p-8 text-gray-800">
+                            <div class="ticket-perforation mb-6"></div>
+                            
+                            <!-- Plan de Comunicación -->
+                            <!-- CAMBIADO: bg-blue-50 border-blue-200 -->
+                            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 mb-6 border border-blue-200">
+                                <div class="text-4xl mb-4">📢</div>
+                                <h4 class="font-bold text-xl mb-4 text-gray-800">Plan de Comunicación</h4>
+                                <p class="text-gray-700 mb-4 text-sm">Promoción conjunta fundamental para el éxito.</p>
+                                <ul class="space-y-3 text-sm">
+                                    <li class="flex items-start">
+                                        <span class="text-brand-primary mr-3 font-bold text-lg">➢</span>
+                                        <span class="text-gray-700"><strong>Compromiso del Club:</strong> Difusión mediante comunicados oficiales, web, email y redes sociales.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-brand-primary mr-3 font-bold text-lg">➢</span>
+                                        <span class="text-gray-700"><strong>Video Promocional:</strong> Producción de alta calidad con jugadores influyentes para generar entusiasmo.</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Fases del Proyecto -->
+                            <div class="bg-white border-2 border-gray-200 rounded-xl p-6">
+                                <div class="text-4xl mb-4">🚀</div>
+                                <h4 class="font-bold text-xl mb-4 text-gray-800">Fases del Proyecto</h4>
+                                <div class="space-y-6">
+                                    <div class="flex gap-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold">1</div>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-bold text-gray-800 mb-1">Fase 1: Formalización</h5>
+                                            <p class="text-sm text-gray-600">Firma del contrato (Marco de colaboración Club - Merchandream).</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-white font-bold">2</div>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-bold text-gray-800 mb-1">Fase 2: Desarrollo y Presentación</h5>
+                                            <p class="text-sm text-gray-600">Elaboración de documentación y presentación conjunta a la afición.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Observación Clave -->
+                            <div class="mt-6 bg-gradient-to-r from-brand-primary to-brand-dark p-1 rounded-xl">
+                                <div class="bg-white rounded-lg p-6 text-center">
+                                    <p class="font-bold text-brand-primary uppercase text-xs mb-2 tracking-widest">Observación Clave</p>
+                                    <p class="text-gray-800 font-medium leading-relaxed">
+                                        "Este proyecto no es solo una iniciativa de engagement para la afición, sino una <span class="text-brand-primary font-bold">herramienta financiera concreta</span> diseñada para generar recursos económicos alternativos y directos para la entidad."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Navigation Buttons -->
+                <!-- NUEVO: Contenedor con z-index alto -->
+                <div class="nav-buttons-container">
+                    <div class="nav-buttons">
+                        <button class="nav-btn" id="prevBtn" onclick="changeTicket(-1)" disabled>← Anterior</button>
+                        <button class="nav-btn" id="nextBtn" onclick="changeTicket(1)">Siguiente →</button>
                     </div>
                 </div>
-            </div>
 
-            <div class="text-center mt-16">
-                <a href="#contacto" class="inline-block bg-slate-900 text-white font-bold py-4 px-12 rounded-full text-lg hover:bg-slate-800 transition-colors shadow-xl">
-                    Solicitar Propuesta Formal
-                </a>
+                <div class="text-center mt-12">
+                    <a href="#contacto" class="inline-block bg-brand-primary text-white font-bold py-4 px-12 rounded-full text-lg hover:bg-brand-light transition-all shadow-xl">
+                        Solicitar Propuesta Formal
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="contacto" class="py-24 relative">
+    <!-- CONTACTO SECTION -->
+    <section id="contacto" class="py-24 bg-slate-950">
         <div class="container mx-auto px-4 sm:px-6">
             <div class="text-center mb-12">
-                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-slate-900">
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6 text-white">
                     Hablemos de tu Club
                 </h2>
-                <p class="text-xl text-slate-600 max-w-2xl mx-auto">
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
                     Agenda una presentación personalizada sin compromiso
                 </p>
             </div>
 
-            <div class="glass rounded-3xl p-8 sm:p-12 max-w-3xl mx-auto card-shadow">
+            <div class="glass-effect rounded-3xl p-8 sm:p-12 max-w-3xl mx-auto">
                 <div class="flex flex-col gap-6 mb-8">
                     <div class="text-center">
-                        <p class="text-sm text-slate-500 mb-2">Email</p>
-                        <p class="text-lg sm:text-xl font-semibold text-slate-800 break-all">direccion.general@merchandream.es</p>
+                        <p class="text-sm text-gray-400 mb-2">Email</p>
+                        <p class="text-lg sm:text-xl font-semibold text-white break-all">info@merchandream.com</p>
                     </div>
                     <div class="text-center">
-                        <p class="text-sm text-slate-500 mb-2">Teléfono</p>
-                        <p class="text-lg sm:text-xl font-semibold text-slate-800">+34 605 19 57 44</p>
+                        <p class="text-sm text-gray-400 mb-2">Teléfono</p>
+                        <p class="text-lg sm:text-xl font-semibold text-white">+34 605 19 57 44</p>
                     </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="mailto:direccion.general@merchandream.es?subject=Solicitud%20de%20Información%20Merchandream&body=Hola,%0A%0AMe%20gustaría%20recibir%20más%20información%20sobre%20sus%20servicios%20de%20Lucky%20Dolls%20y%20Weekend%20Experience.%0A%0AGracias." 
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="bg-gradient-to-r from-brand-primary to-brand-light text-white font-bold py-4 px-8 rounded-full text-lg hover:scale-105 transition-transform text-center shadow-lg">
+                    <a href="mailto:info@merchandream.com" class="bg-brand-primary text-white font-bold py-4 px-8 rounded-full text-lg hover:bg-brand-light transition-all text-center shadow-lg">
                         📧 Enviar Email
                     </a>
                     <a href="https://wa.me/34605195744?text=Hola,%20estoy%20interesado%20en%20conocer%20más%20sobre%20Merchandream" 
@@ -699,184 +997,219 @@
         </div>
     </section>
 
-    <footer class="py-12 border-t border-slate-200 relative bg-white">
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-slate-800 bg-brand-black">
         <div class="container mx-auto px-4 sm:px-6 text-center">
             <div class="text-3xl font-black mb-4">
-                <span class="bg-gradient-to-r from-brand-primary to-brand-light bg-clip-text text-transparent">
-                    MERCHANDREAM
-                </span>
+                <span class="text-brand-primary">MERCHANDREAM</span>
             </div>
-            <p class="text-slate-500 text-sm mb-4">
+            <p class="text-gray-400 text-sm mb-4">
                 Soluciones de monetización para clubes deportivos
             </p>
-            <p class="text-slate-400 text-xs">
+            <p class="text-gray-500 text-xs">
                 &copy; 2026 Merchandream. Todos los derechos reservados.
             </p>
         </div>
     </footer>
 
-    <!-- PRODUCT CAROUSEL MODAL -->
-    <div id="modal-product" class="modal-overlay" onclick="closeProductModal()">
-        <div class="bg-white rounded-[40px] w-full max-w-5xl flex flex-col md:flex-row overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
-            <!-- Carrusel -->
-            <div class="md:w-3/5 bg-slate-50 p-10 flex flex-col items-center justify-center relative min-h-[400px]">
-                <button onclick="prevSlide()" class="absolute left-6 p-4 bg-white rounded-full shadow-lg hover:bg-slate-50 font-bold z-10">‹</button>
-                <img id="modal-img" src="" class="max-h-[450px] object-contain drop-shadow-2xl transition-opacity duration-300" style="opacity: 1;">
-                <button onclick="nextSlide()" class="absolute right-6 p-4 bg-white rounded-full shadow-lg hover:bg-slate-50 font-bold z-10">›</button>
-                <div id="modal-dots" class="absolute bottom-6 flex space-x-2"></div>
-            </div>
-            <!-- Info -->
-            <div class="md:w-2/5 p-12 flex flex-col justify-center border-l border-slate-100">
-                <h3 id="modal-title" class="text-4xl font-black mb-2 text-slate-900"></h3>
-                <p id="modal-price" class="text-2xl font-bold text-brand-primary mb-8"></p>
-                <div class="space-y-4 text-slate-500">
-                    <p>✓ Pintado a mano</p>
-                    <p>✓ Material: Poliresina</p>
-                    <p>✓ Diseño 100% Personalizado</p>
-                </div>
-                <button onclick="closeProductModal()" class="mt-12 bg-slate-900 text-white font-black py-4 rounded-2xl">Cerrar</button>
-            </div>
+    <!-- MODAL CAROUSEL -->
+    <div id="carouselModal" class="modal">
+        <span class="close-modal" onclick="closeCarousel()">&times;</span>
+        <button class="carousel-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+        <div class="modal-content">
+            <img id="carouselImage" class="carousel-img" src="" alt="Lucky Doll">
+            <p class="text-center text-white mt-4 text-base" id="carouselCounter"></p>
         </div>
+        <button class="carousel-btn next" onclick="changeSlide(1)">&#10095;</button>
     </div>
+
     <script>
-        // DATOS DE PRODUCTOS CORREGIDOS (Syntax Check)
-        const productsData = {
-            '8cm': {
-                title: 'Lucky Doll 8cm',
-                price: 'Desde 5,25€ + IVA',
-                images: ['assets/luckyDolls/8cm/Pic01.png',
+        // CAROUSEL DATA
+        const carouselData = {
+            '8cm': [
+                'assets/luckyDolls/8cm/Pic01.png',
                 'assets/luckyDolls/8cm/Pic02.png',
                 'assets/luckyDolls/8cm/Pic03.png',
                 'assets/luckyDolls/8cm/Pic04.png',
                 'assets/luckyDolls/8cm/Pic05.png',
                 'assets/luckyDolls/8cm/Pic06.png',
-                'assets/luckyDolls/8cm/Pic07.png']
-            },
-            '15cm': {
-                title: 'Lucky Doll 15cm',
-                price: 'Desde 9,86€ + IVA',
-                images: ['assets/luckyDolls/14cm/Pic03.png',
-                         'assets/luckyDolls/14cm/Pic05.png',
-                         'assets/luckyDolls/14cm/Pic07.png']
-            },
-            '18cm': {
-                title: 'Lucky Doll 18cm',
-                price: 'Desde 11,20€ + IVA',
-                images: ['assets/luckyDolls/18cm/Pic02.png',
-						 'assets/luckyDolls/18cm/Pic03.png',
-						 'assets/luckyDolls/18cm/Pic04.png']
-            },
-            '18cmSonido': {
-                title: 'Lucky Doll 18cm Sonido',
-                price: 'Desde 14,35€ + IVA',
-                images: ['assets/luckyDolls/18cmSonido/Pic01.png']
-            },
-            '40cm': {
-                title: 'Lucky Doll 40cm',
-                price: 'Desde 75,00€ + IVA',
-                images: ['assets/luckyDolls/40cm/Pic01.png']
-            },
-            'tamanoReal': {
-                title: 'Figura Tamaño Real',
-                price: 'Presupuesto Bajo Pedido',
-                images: ['assets/luckyDolls/Real/Pic01.png']
-            },
-            'vintage': {
-                title: 'Colección Vintage',
-                price: 'Desde 12,50€ + IVA',
-                images: ['assets/luckyDolls/Vintages/Pic01.png',
-						 'assets/luckyDolls/Vintages/Pic02.png',
-						 'assets/luckyDolls/Vintages/Pic03.png',
-						 'assets/luckyDolls/Vintages/Pic04.png',
-						 'assets/luckyDolls/Vintages/Pic05.png',
-						 'assets/luckyDolls/Vintages/Pic06.png',
-						 'assets/luckyDolls/Vintages/Pic07.png',
-						 'assets/luckyDolls/Vintages/Pic08.png',
-						 'assets/luckyDolls/Vintages/Pic09.png',
-						 'assets/luckyDolls/Vintages/Pic10.png',
-						 'assets/luckyDolls/Vintages/Pic11.png',
-						 'assets/luckyDolls/Vintages/Pic12.png',
-						 'assets/luckyDolls/Vintages/Pic13.png',
-						 'assets/luckyDolls/Vintages/Pic14.png',
-						 'assets/luckyDolls/Vintages/Pic15.png',
-						 'assets/luckyDolls/Vintages/Pic16.png',
-						 'assets/luckyDolls/Vintages/Pic17.png']
+                'assets/luckyDolls/8cm/Pic07.png'
+            ],
+            '15cm': [
+                'assets/luckyDolls/14cm/Pic03.png',
+                'assets/luckyDolls/14cm/Pic05.png',
+                'assets/luckyDolls/14cm/Pic07.png'
+            ],
+            '18cm': [
+                'assets/luckyDolls/18cm/Pic02.png',
+                'assets/luckyDolls/18cm/Pic03.png',
+                'assets/luckyDolls/18cm/Pic04.png'
+            ],
+            '18cmSonido': [
+                'assets/luckyDolls/18cmSonido/Pic01.png'
+            ],
+            '40cm': [
+                'assets/luckyDolls/40cm/Pic01.png'
+            ],
+            'real': [
+                'assets/luckyDolls/Real/Pic01.png'
+            ],
+            'vintage': [
+                'assets/luckyDolls/Vintages/Pic01.png',
+                'assets/luckyDolls/Vintages/Pic02.png',
+                'assets/luckyDolls/Vintages/Pic03.png',
+                'assets/luckyDolls/Vintages/Pic04.png',
+                'assets/luckyDolls/Vintages/Pic05.png',
+                'assets/luckyDolls/Vintages/Pic06.png',
+                'assets/luckyDolls/Vintages/Pic07.png',
+                'assets/luckyDolls/Vintages/Pic08.png',
+                'assets/luckyDolls/Vintages/Pic09.png',
+                'assets/luckyDolls/Vintages/Pic10.png',
+                'assets/luckyDolls/Vintages/Pic11.png',
+                'assets/luckyDolls/Vintages/Pic12.png',
+                'assets/luckyDolls/Vintages/Pic13.png',
+                'assets/luckyDolls/Vintages/Pic14.png',
+                'assets/luckyDolls/Vintages/Pic15.png',
+                'assets/luckyDolls/Vintages/Pic16.png',
+                'assets/luckyDolls/Vintages/Pic17.png'
+            ]
+        };
+
+        let currentCategory = '';
+        let currentIndex = 0;
+
+        function openCarousel(category) {
+            currentCategory = category;
+            currentIndex = 0;
+            const modal = document.getElementById('carouselModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateCarousel();
+        }
+
+        function closeCarousel() {
+            const modal = document.getElementById('carouselModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function changeSlide(direction) {
+            const images = carouselData[currentCategory];
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const images = carouselData[currentCategory];
+            const img = document.getElementById('carouselImage');
+            const counter = document.getElementById('carouselCounter');
+            img.src = images[currentIndex];
+            counter.textContent = `${currentIndex + 1} / ${images.length}`;
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeCarousel();
+        });
+
+        // Close modal on background click
+        document.getElementById('carouselModal').addEventListener('click', function(e) {
+            if (e.target === this) closeCarousel();
+        });
+
+        // Arrow key navigation
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('carouselModal');
+            if (modal.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') changeSlide(-1);
+                if (e.key === 'ArrowRight') changeSlide(1);
             }
-        };
+        });
 
-        let activeKey = '';
-        let activeIdx = 0;
+        // TICKET SYSTEM
+        let currentTicket = 1;
+        const totalTickets = 6;
 
-        // FUNCIONES GLOBALES (Previenen ReferenceError)
-        window.openProductModal = function(key) {
-            if (!productsData[key]) return;
-            activeKey = key;
-            activeIdx = 0;
-            const modal = document.getElementById('modal-product');
-            if (modal) {
-                updateModal();
-                modal.classList.add('open');
-                document.body.style.overflow = 'hidden';
+        // NUEVO: Función para actualizar la altura del contenedor
+        function updateStackHeight() {
+            const activeTicket = document.querySelector('.ticket.active');
+            const stack = document.getElementById('ticketStack');
+            if (activeTicket && stack) {
+                // Obtener altura del ticket activo
+                const height = activeTicket.offsetHeight;
+                // Establecer altura del stack (con un pequeño margen de seguridad)
+                // Usamos un mínimo de 600px para evitar colapsos visuales extraños en cambios rápidos
+                const finalHeight = Math.max(height + 40, 600);
+                stack.style.height = finalHeight + 'px';
             }
-        };
+        }
 
-        window.closeProductModal = function() {
-            document.getElementById('modal-product').classList.remove('open');
-            document.body.style.overflow = '';
-        };
-		
-		function updateModal() {
-			const product = productsData[activeKey];
-			const img = document.getElementById('modal-img');
-			
-			img.style.opacity = '0';
-			setTimeout(() => {
-				img.src = product.images[activeIdx];
-				img.style.opacity = '1';
-			}, 150);
-		
-			document.getElementById('modal-title').innerText = product.title;
-			document.getElementById('modal-price').innerText = product.price;
-		
-			const dots = document.getElementById('modal-dots');
-			dots.innerHTML = '';
-			product.images.forEach((_, i) => {
-				const dot = document.createElement('div');
-				dot.className = `w-2 h-2 rounded-full ${i === activeIdx ? 'bg-brand-primary' : 'bg-slate-300'}`;
-				dots.appendChild(dot);
-			});
-		}
+        function changeTicket(direction) {
+            const newTicket = currentTicket + direction;
+            if (newTicket < 1 || newTicket > totalTickets) return;
 
-        window.nextSlide = function() {
-            if (!activeKey) return;
-            activeIdx = (activeIdx + 1) % productsData[activeKey].images.length;
-            updateModal();
-        };
+            // Hide current ticket
+            const current = document.querySelector(`.ticket[data-ticket="${currentTicket}"]`);
+            current.classList.remove('active');
+            current.classList.add(direction > 0 ? 'stacked' : 'hidden');
 
-        window.prevSlide = function() {
-            if (!activeKey) return;
-            activeIdx = (activeIdx - 1 + productsData[activeKey].images.length) % productsData[activeKey].images.length;
-            updateModal();
-        };
+            // Show new ticket
+            currentTicket = newTicket;
+            const next = document.querySelector(`.ticket[data-ticket="${currentTicket}"]`);
+            next.classList.remove('stacked', 'hidden');
+            next.classList.add('active');
 
-        // MENU MOVIL CORREGIDO
-		const menuToggle = document.getElementById('mobile-menu-toggle');
-		const mobileMenu = document.getElementById('mobile-menu');
-		
-		if (menuToggle && mobileMenu) {
-			menuToggle.addEventListener('click', () => {
-				menuToggle.classList.toggle('active');
-				mobileMenu.classList.toggle('active');
-			});
-		
-			document.querySelectorAll('.mobile-menu-link').forEach(link => {
-				link.addEventListener('click', () => {
-					mobileMenu.classList.remove('active');
-					menuToggle.classList.remove('active');
-				});
-			});
-		}
+            // Update buttons
+            document.getElementById('prevBtn').disabled = currentTicket === 1;
+            document.getElementById('nextBtn').disabled = currentTicket === totalTickets;
 
+            // Update text on last ticket
+            if (currentTicket === totalTickets) {
+                document.getElementById('nextBtn').textContent = '✓ Finalizado';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Siguiente →';
+            }
+            
+            // Actualizar altura del stack después de un pequeño delay para permitir renderizado
+            setTimeout(updateStackHeight, 50);
+        }
+
+        // Actualizar altura al cargar y al redimensionar
+        window.addEventListener('load', updateStackHeight);
+        window.addEventListener('resize', updateStackHeight);
+
+        // MOBILE MENU LOGIC
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+
+        if (menuToggle && mobileMenu && mobileMenuOverlay) {
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            });
+
+            mobileMenuOverlay.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    menuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    mobileMenuOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
     </script>
 </body>
 </html>
